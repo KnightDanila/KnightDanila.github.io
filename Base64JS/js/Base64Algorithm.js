@@ -5,25 +5,6 @@
  */
 
 var EnBase64;
-ZeroClipboard.config({swfPath: "ZeroClipboard.swf"});
-var client = new ZeroClipboard($('.clip_button'));
-client.on('ready', function (event) {
-    console.log('movie is loaded');
-
-    client.on('copy', function (event) {
-        console.log('copy');
-        event.clipboardData.setData('text/plain', EnBase64);
-    });
-
-    client.on('aftercopy', function (event) {
-        console.log('Copied text to clipboard: ' + event.data['text/plain']);
-    });
-});
-
-client.on('error', function (event) {
-    // console.log( 'ZeroClipboard error of type "' + event.name + '": ' + event.message );
-    ZeroClipboard.destroy();
-});
 
 (function () {
 
@@ -257,6 +238,7 @@ var Base64 = {
         return res;
     }
 };
+
 function realBase64(obj) {
 /// 
 //base64textArea.innerHTML = "You don`t write it yet :)";
@@ -281,34 +263,33 @@ function realBase64(obj) {
         hexTextArea.innerHTML = hex;
         base64TextArea.innerHTML = Base64.encode(obj);
         deBase64TextArea.innerHTML = Base64.decode(Base64.encode(obj));
-    }
-    else {
+    } else {
         EnBase64 = "<video width='640' height='480' controls><source src='data:video/mp4;base64," + Base64.encode(obj) + "'></video>";
         $('.clip_button').css("visibility", "visible");
 
-         var createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL || function(){}; 
-    var blob = null;
-    var content = ""+EnBase64;
-    var mimeString = "application/octet-stream"; 
-    window.BlobBuilder = window.BlobBuilder || 
-                         window.WebKitBlobBuilder || 
-                         window.MozBlobBuilder || 
-                         window.MSBlobBuilder;  
+        var createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL || function () {};
+        var blob = null;
+        var content = "" + EnBase64;
+        var mimeString = "application/octet-stream";
+        window.BlobBuilder = window.BlobBuilder ||
+                window.WebKitBlobBuilder ||
+                window.MozBlobBuilder ||
+                window.MSBlobBuilder;
 
 
-    if(window.BlobBuilder){
-       var bb = new BlobBuilder();
-       bb.append(content);
-       blob = bb.getBlob(mimeString);
-    }else{
-       blob = new Blob([content], {type : mimeString});
-    }
-    var url = createObjectURL(blob);
-    var a = document.createElement("a");
-    a.href = url
-    a.download = "file.txt";
-    a.innerHTML = "download file";
-    document.body.appendChild(a);
+        if (window.BlobBuilder) {
+            var bb = new BlobBuilder();
+            bb.append(content);
+            blob = bb.getBlob(mimeString);
+        } else {
+            blob = new Blob([content], {type: mimeString});
+        }
+        var url = createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "file.txt";
+        a.innerHTML = "download file";
+        document.body.appendChild(a);
 
 
     }
