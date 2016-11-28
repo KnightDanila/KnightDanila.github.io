@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Base64JS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+        <!-- jQuery -->
+        <script src="js/libs/jquery/jquery.js"></script>
+        <!-- BootStrap -->
+        <link rel="stylesheet" href="js/libs/twitter-bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="js/libs/twitter-bootstrap/css/bootstrap-theme.css">
+        <script src="js/libs/twitter-bootstrap/js/bootstrap.js"></script>
+
+        <!-- My Style and JS -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- My StatusBar -->
+        <link rel="stylesheet" href="js/loadingStatusBar/loadingStatusBar.css">
+        <script src="js/loadingStatusBar/loadingStatusBar.js"></script>
+
+
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <table id="file-info">
+            
+        </table>
+
+        <input type="file" id="file-dialog" multiple>
+        <div id="your-files">Drag and Drop ZONE</div>
+        <div id="file-loading-progress" class="loading-progress-border">
+            <div class="loading-progress">
+                <div class="loading-progress-sparkle"></div>
+            </div>
+        </div>
+
+        <div id="file-bin">bin</div>
+
+        <textarea id="char-result" 
+                  rows="3" 
+                  cols="40" 
+                  class="base64-textarea">
+            Hello I'm char text
+        </textarea>
+
+        <textarea id="hex-result" 
+                  rows="3" 
+                  cols="32" 
+                  class="base64-textarea">
+            Hello I'm Hex text
+        </textarea>
+
+        <br>
+        <br>
+        <br>
+
+        <textarea id="base64-result" 
+                  rows="3" 
+                  cols="40" 
+                  class="base64-textarea">
+            Hello I'm Base64 text
+        </textarea>
+
+        <textarea id="deBase64-result" 
+                  rows="3" 
+                  cols="40" 
+                  class="base64-textarea">
+            Hello I'm decode Base64 text
+        </textarea>
+
+        <button class="clip_button">Копировать в буфер</button>
+        
+        <script>
+            //var a = 4 - 1;
+            //a;
+            
+        </script>
+        <script src="js/ZeroClipboard/ZeroClipboard.js"></script>
+        <script src="js/fileReader.js"></script>
+        <script src="js/droper.js"></script>
+        <script src="js/Base64Algorithm.js"></script>
+        
+
+
+
+    </body>
+</html>

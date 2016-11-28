@@ -1,0 +1,59 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20.09.2015, 15:23:27
+    Author     : KnightDanila
+*/
+/**
+    How to use it:
+    <div id="loading-progress-main" class="loading-progress-border">
+            <div class="loading-progress">
+                <div class="loading-progress-sparkle"></div>
+            </div>
+    </div>
+
+    THEN IN JS
+    
+    loadingStatus("loading-progress-main", currentValue, maxValue);
+
+    ALSO
+    NEED JQuery
+**/
+.loading-progress-border{
+    border: 2px solid rgba(0,180,30,0.5);
+    
+    background: repeating-linear-gradient(
+        135deg,
+        #555, 
+        #555 10px, 
+        #5b5b5b 10px,
+        #5b5b5b 20px) top left fixed;
+    
+    width: 300px;
+    border-radius: 10px;
+}
+.loading-progress{
+width: 100%;    
+
+background: repeating-linear-gradient(
+        135deg,
+        #9ACD32, 
+        #9ACD32 10px,
+        #749A33 10px,
+        #749A33 20px) top left fixed;
+border-radius: 8px;
+}
+.loading-progress-sparkle{
+    width: 100%;
+    padding: 10px 0px; 
+    background: repeating-linear-gradient(
+        90deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.7) 100%,
+        transparent 100%
+        );
+    border-radius: 8px;
+}
