@@ -26,17 +26,20 @@ and open the template in the editor.
         <link rel="stylesheet" href="js/loadingStatusBar/loadingStatusBar.css">
         <script src="js/loadingStatusBar/loadingStatusBar.js"></script>
 
+        <link href="js/blockSizes/blockSizes.css" rel="stylesheet" type="text/css"/>
+        <link href="js/footer/footer.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" href="favicon.png"/>
     </head>
     <body>
         <div>Base64JS version 0.0001 alpha</div>
+        <a class="footer" href="Base64JS.7z">download Base64JS version 0.0001 alpha</a>
         <table id="file-info">
-            
+
         </table>
 
         <input type="file" id="file-dialog" multiple>
         <div id="your-files">Drag and Drop ZONE</div>
-        <div id="file-loading-progress" class="loading-progress-border">
+        <div id="file-loading-progress" class="loading-progress-border half-width">
             <div class="loading-progress">
                 <div class="loading-progress-sparkle"></div>
             </div>
@@ -44,17 +47,22 @@ and open the template in the editor.
 
         <div id="file-bin">bin</div>
 
+        <div>
+            <span class="one-quarter" style="display: inline-block; text-align: center;">CHAR(0-255)</span>
+            <span class="one-quarter" style="display: inline-block; text-align: center;">HEX</span>
+        </div>
+
         <textarea id="char-result" 
                   rows="3" 
                   cols="40" 
-                  class="base64-textarea">
+                  class="base64-textarea one-quarter">
             Hello I'm char text
         </textarea>
 
         <textarea id="hex-result" 
                   rows="3" 
                   cols="32" 
-                  class="base64-textarea">
+                  class="base64-textarea one-quarter">
             Hello I'm Hex text
         </textarea>
 
@@ -62,32 +70,37 @@ and open the template in the editor.
         <br>
         <br>
 
+        <div>
+            <span class="one-quarter" style="display: inline-block; text-align: center;">Base64</span>
+            <span class="one-quarter" style="display: inline-block; text-align: center;">decode Base64 - raw (text)</span>
+        </div>
+
         <textarea id="base64-result" 
                   rows="3" 
                   cols="40" 
-                  class="base64-textarea">
+                  class="base64-textarea one-quarter">
             Hello I'm Base64 text
         </textarea>
 
         <textarea id="deBase64-result" 
                   rows="3" 
                   cols="40" 
-                  class="base64-textarea">
+                  class="base64-textarea one-quarter">
             Hello I'm decode Base64 text
         </textarea>
 
         <button class="clip_button">Копировать в буфер</button>
-        
+
         <script>
             //var a = 4 - 1;
             //a;
-            
         </script>
-        <script src="js/ZeroClipboard/ZeroClipboard.js"></script>
+
+        <!--<script src="js/ZeroClipboard/ZeroClipboard.js"></script>-->
         <script src="js/fileReader.js"></script>
         <script src="js/droper.js"></script>
         <script src="js/Base64Algorithm.js"></script>
-        
+
 
 
 
