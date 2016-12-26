@@ -1,0 +1,121 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07.06.2016, 23:15:46
+    Author     : KnightDanila
+*/
+
+/* main header */
+.header { 
+  position: absolute;
+  z-index:100;
+  top: 0px;
+  left: 0px;
+  margin: 0; 
+  padding: .7em 0 .4em 0; 
+  background-color: white;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0px 0px 10px 1px rgba(0,100,100,0.75);
+} 
+
+/*
+  it is all for:
+  1) Elements like line _ _ _ ,
+  2) for | lights, 
+  3) for lights animation
+*/
+.header ul { 
+   list-style: none; 
+   margin: 0; 
+   padding: 0; 
+} 
+
+.header ul li { 
+   margin: 0; 
+   padding: 0; 
+   display: inline; 
+   border-left: 3px groove grey;
+   animation: light 3s infinite ease-in-out;
+}
+@keyframes light {
+  0% {
+    border-left: 3px groove grey;
+  }
+  50% {
+    border-left: 3px groove #00FFFF;
+  }
+  100% {
+    border-left: 3px groove grey;
+  }
+}
+
+.header ul li.last-item { 
+   margin: 0; 
+   padding: 0; 
+   display: inline; 
+   border-right: 3px groove grey;
+   animation: light 3s infinite ease-in-out, light-last-item 3s infinite ease-in-out;
+} 
+@keyframes light-last-item {
+  0% {
+    border-right: 3px groove grey;
+  }
+  50% {
+    border-right: 3px groove #00FFFF;
+  }
+  100% {
+    border-right: 3px groove grey;
+  }
+}
+
+/* all header items styles*/
+.header ul a.header-item{
+    border-bottom: solid #F1F6F6;
+    -webkit-transition: all 2s ease-in-out;
+    -moz-transition: all 2s ease-in-out;
+    -ms-transition: all 2s ease-in-out;
+    -o-transition: all 2s ease-in-out;
+    transition: all 2s ease-in-out;
+}
+
+.header ul a.header-item:link{ 
+   margin: 0; 
+   padding: .3em .4em .3em .4em; 
+   text-decoration: none; 
+   font-weight: bold; 
+   font-size: medium; 
+   color: #004415; 
+} 
+
+.header ul a.header-item:visited{ 
+   margin: 0; 
+   padding: .3em .4em .3em .4em; 
+   text-decoration: none; 
+   font-weight: bold; 
+   font-size: medium; 
+   color: black; 
+} 
+
+.header ul a.header-item:active{ 
+   margin: 0; 
+   padding: .3em .4em .3em .4em; 
+   text-decoration: none; 
+   font-weight: bold; 
+   font-size: medium; 
+   color: #227755; 
+} 
+
+.header ul a.header-item:hover{ 
+  margin: 0; 
+  padding: .3em 2.0em .3em 2.0em; 
+  text-decoration: none; 
+  font-weight: bold; 
+  font-size: medium; 
+  color: #25988F;
+  border-bottom: solid rgba(0, 255, 255, 1.0);
+  box-shadow: 0px 10px 10px -7px rgba(0, 255, 255, 0.80);
+}

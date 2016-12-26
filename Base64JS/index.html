@@ -16,8 +16,8 @@ and open the template in the editor.
         <script src="js/libs/jquery/jquery.js"></script>
         <!-- BootStrap -->
         <link rel="stylesheet" href="js/libs/twitter-bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="js/libs/twitter-bootstrap/css/bootstrap-theme.css">
-        <script src="js/libs/twitter-bootstrap/js/bootstrap.js"></script>
+        <!--<link rel="stylesheet" href="js/libs/twitter-bootstrap/css/bootstrap-theme.css">-->
+        <!--<script src="js/libs/twitter-bootstrap/js/bootstrap.js"></script>-->
 
         <!-- My Style and JS -->
         <link rel="stylesheet" href="style.css">
@@ -29,10 +29,30 @@ and open the template in the editor.
         <link href="js/blockSizes/blockSizes.css" rel="stylesheet" type="text/css"/>
         <link href="js/footer/footer.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" href="favicon.png"/>
+        
+        <link href="js/modalDiv/modalDiv.css" rel="stylesheet" type="text/css"/>
+        <link href="js/modalDiv/modalDiv_YellowGreenStyle.css" rel="stylesheet" type="text/css"/>
+        <!-- toolBar HEADER -->
+        <!--
+        <link href="js_css/toolBar/headerWhiteStyle.css" rel="stylesheet" type="text/css"/>
+        -->
+        <link href="js/toolBar/headerYellowGreenStyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>Base64JS version 0.0001 alpha</div>
-        <a class="footer" href="Base64JS.7z">download Base64JS version 0.0001 alpha</a>
+        <div class="header"> 
+            <ul> 
+                <li><a class="header-item" href = "https://knightdanila.github.io/Base64JS/">Main</a></li>
+                <li><a class="header-item" href = "#" onclick="document.getElementById('HowToUse').style.display = 'block';">How to use</a></li>
+                <li class="last-item"><a class="header-item" href="#" onclick="document.getElementById('About').style.display = 'block';">About</a></li>
+            </ul>   
+        </div> 
+        <br>
+        <br>
+        <script>
+            var VERSION ="Base64JS version 0.0001 alpha";
+        </script>
+        <h2>BASE64 Encoder</h2>
+        <a class="footer" href="index_OneFileVersion.html">download Base64JS version 0.0001 alpha</a>
         <table id="file-info">
 
         </table>
@@ -102,6 +122,60 @@ and open the template in the editor.
         <script src="js/Base64Algorithm.js"></script>
 
 
+        <!--    HOW TO USE   -->
+        <div id = "HowToUse" class="MD MD-background MD-light" style="width: 50%; height: 70%; left: 25%; top: 15%; display: none;">
+            <div class="MD-close-btn" onclick="document.getElementById('HowToUse').style.display = 'none';">X</div>
+            <div class="MD-header">
+                HOW TO USE
+            </div>
+            <div class="MD-content">
+                <div style="text-align: left;">
+                    <u>Steps:</u>
+                    <ol>
+                        <li>
+                            Click on "Drag and Drop ZONE" and select something
+                        </li>
+                        <li>
+                            Or drop something on "Drag and Drop ZONE"
+                        </li>
+                        <li>
+                            Wait... After loading you will get what you need
+                        </li>
+                        <li>
+                            CHAR(0-255) - represent values in integer data 0-255
+                        </li>
+                        <li>
+                            HEX - represent values in hexadecimal
+                        </li>
+                        <li>
+                            Base64 - Base64 encoding data
+                        </li>
+                        <li>
+                            decode Base64 - raw (text) - decoding data from Base64 and show raw data
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--    ABOUT   -->
+        <div id = "About" class="MD MD-background MD-light" style="width: 50%; height: 70%; left: 25%; top: 15%; display: none;">
+            <div class="MD-close-btn" onclick="document.getElementById('About').style.display = 'none';">X</div>
+            <div class="MD-header">
+                <h3>ABOUT</h3>
+            </div>
+            <div class="MD-content">
+                <div>
+                    <h4>Author: Egoshkin Danila Igorevich</h4>
+                    Student of DNU, Faculty of Applied Mathematics
+                    <br>
+                    <br>
+                    <h4 id="Version"></h4>
+                    <script>
+                        document.getElementById('Version').innerHTML = VERSION;
+                    </script>
+                </div>
+            </div>
+        </div>
 
 
     </body>
