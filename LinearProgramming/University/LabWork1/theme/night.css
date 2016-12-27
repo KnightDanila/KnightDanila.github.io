@@ -1,0 +1,124 @@
+/**
+ * Black theme
+ */
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+  background: #111;
+  background-color: #111; 
+  font-family: "Open Sans", sans-serif;
+  font-size: larger;
+  font-weight: normal;
+  color: #eee; 
+}
+
+.white {
+    background: #333;
+}
+.reveal {
+}
+
+::selection {
+  color: #fff;
+  background: #e7ad52;
+  text-shadow: none; }
+
+.section,
+.section > section {
+  line-height: 1.3;
+  font-weight: inherit; }
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 20px 0;
+  color: #eee;
+  font-family: "Montserrat", Impact, sans-serif;
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  text-shadow: none;
+  word-wrap: break-word; 
+  background: #111;
+  background-color: #111; 
+}
+
+h1 {
+  font-size: 3.77em; }
+
+h2 {
+  font-size: 2.11em; }
+
+h3 {
+  font-size: 1.55em; }
+
+h4 {
+  font-size: 1em; }
+
+h1 {
+  text-shadow: none; }
+
+/*********************************************
+ * OTHER
+ *********************************************/
+p {
+  margin: 20px 0;
+  line-height: 1.3; }
+
+ol,
+dl,
+ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+
+ol {
+  list-style-type: decimal; }
+
+ul {
+  list-style-type: disc; }
+
+ul ul {
+  list-style-type: square; }
+
+ul ul ul {
+  list-style-type: circle; }
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  display: block;
+  margin-left: 40px;
+}
+li{
+    margin: 0px 40px 20px 0px;
+}
+
+/*********************************************
+ * LINKS
+ *********************************************/
+a {
+  color: #e7ad52;
+  text-decoration: none;
+  -webkit-transition: color .15s ease;
+  -moz-transition: color .15s ease;
+  transition: color .15s ease; }
+
+a:hover {
+  color: #f3d7ac;
+  text-shadow: none;
+  border: none; }
+
+.roll span:after {
+  color: #fff;
+  background: #d08a1d; }
