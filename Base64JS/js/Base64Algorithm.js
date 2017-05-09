@@ -182,6 +182,10 @@ function autoBase64(obj) {
 var Base64 = {
     _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
     encode: function (e) {
+        //alert(this._keyStr.length);
+        //alert(this._keyStr.charAt(this._keyStr.length));
+        //alert(this._keyStr.charAt(this._keyStr.length-1));
+        
         var res = "";
         var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
         var i = 0;
@@ -195,13 +199,20 @@ var Base64 = {
             enc2 = ((chr1 & 3) << 4) | (chr2 >> 4); //  [ [0100 1101 & отрезаем последние два 0000 0011 = 0000 0001] << 4 = 0001 0000] | фактическ сложение с [ 0110 0001 >> 4 == 0000 0110] == 0001 1100
             enc3 = ((chr2 & 15) << 2) | (chr3 >> 6); //  [ [ 0110 0001 & 0000 1111] сдвигаем на 2 что бы влезло 6] == 0000 0101
             enc4 = chr3 & 63; //  0110 1110 & 0011 1111 == 0010 1110
-
+            
+            if (isNaN(chr2)) {                          // enc2 != enc2 - то есть enc2 не равен вообще ничему :) - короче нельзя превратить в число что бы сравнить, абстракция как бесконечность
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+            /*
+            // It has bug - isNaN(enc2), isNaN(enc3) - it meen enc2, enc3 - why? This is bug :)
             if (isNaN(enc2)) {                          // enc2 != enc2 - то есть enc2 не равен вообще ничему :) - короче нельзя превратить в число что бы сравнить, абстракция как бесконечность
                 enc3 = enc4 = 64;
             } else if (isNaN(enc3)) {
                 enc4 = 64;
             }
-
+            */
             res = res +
                     this._keyStr.charAt(enc1) +
                     this._keyStr.charAt(enc2) +

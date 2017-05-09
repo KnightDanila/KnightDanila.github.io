@@ -14,7 +14,8 @@ and open the template in the editor.
 /* MD - Modal Div */
 .MD{
     position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    /*position: absolute;*/
+    /*z-index: 1000;*/ /* Sit on top */
     /*padding-top: 7%;  Location of the box */
     left: 10%;
     top: 10%;
