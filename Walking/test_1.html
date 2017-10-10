@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../js/libs/jquery/jquery.js" type="text/javascript"></script>
+        <style>
+            div {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin: -.5em -.5em 0 0;
+                background: red;
+                width: 1em;
+                height: 1em;
+                border-radius: 50%;
+                transform: translate(0, 0);
+                transition: transform 100ms linear;
+            }
+        </style>
+    </head>
+    <body>
+        <div></div>
+        <script>
+            var a = 0;
+            var as = 0.5;
+            var x0 = 0;
+            var xs = 0.4;
+            ~function () {
+                var LEFT = 37,
+                        UP = 38,
+                        RIGHT = 39,
+                        DOWN = 40;
+                var dirs = {
+                [LEFT]
+                        : 0, [UP]: 0, [RIGHT]: 0, [DOWN]: 0
+            };
+            var SPEED = 10;
+            var x = 0, y = 0;
+            $(document).keydown(function (e) {
+                dirs[e.keyCode] = 1;
+            });
+
+            $(document).keyup(function (e) {
+                dirs[e.keyCode] = 0;
+            });
+
+            setInterval(function () {
+                var $div = $("div");
+                if (dirs[UP]) {
+                    if (firstStep){
+                        x0 = 0;
+                        firstStep = false;
+                    }
+                    if (a < 1) {
+                        a += as;
+                        if(a > 1){
+                        a = 1;
+                        }
+                    }else{
+                        a = 1;
+                    }
+                    
+                    console.log("a=" + a);
+                } else {
+                    firstStep = true;
+                    if (a > 0) {
+                        a -= as;
+                        if(a < 0){
+                            a = 0;
+                        }
+                    } else {
+                        a = 0;
+                    }
+                    console.log("a=" + a);
+                }
+                x0 += xs;
+                x = a * Math.sin(x0) * 100;
+                //y = 
+                console.log("x0=" + x0);
+                console.log("x=" + x);
+                /*
+                 x -= dirs[LEFT] * SPEED;
+                 x += dirs[RIGHT] * SPEED;
+                 y -= dirs[UP] * SPEED;
+                 y += dirs[DOWN] * SPEED;
+                 */
+                $div.css('transform', `translate(${x}px, ${y}px)`);
+            }, 100);
+            }();
+
+        </script>
+    </body>
+</html>

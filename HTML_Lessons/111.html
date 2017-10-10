@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Practice</title><meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="theme/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <svg version = "1.1" height = "400px"  width = "400px">
+        <rect x="0" y="0" width="400" height="400" fill="none" stroke="black" stroke-width="5px" stroke-opacity="0.5"/>
+        <polyline points="0,25 50,0 100,25 150,0 200,25" fill="rgb(100,100,255)" stroke-width="3" stroke="rgb(255,0,0)"/> 
+        <g fill-opacity="0.6" stroke="black" stroke-width="0.5px">
+            <circle cx="200px" cy="200px" r="104px" fill="red"   transform="translate(  0,-52)" />
+            <circle cx="200px" cy="200px" r="104px" fill="blue"  transform="translate( 60, 52)" />
+            <circle cx="200px" cy="200px" r="104px" fill="green" transform="translate(-60, 52)" />
+        </g>
+        </svg>
+        <br><br><br>
+        <table border="1" width=30%>
+            <tr>
+                <td>Cell1</td><td>Cell2</td><td>Cell3</td>
+            </tr>
+
+            <tr>
+                <td>Cell4</td><td>Cell5</td><td>Cell6</td>
+            </tr>
+
+            <tr>
+                <td>Cell7</td><td COLSPAN=2 ALIGN=center>Cell8</td>
+            </tr>
+        </table>
+        <br><br><br>
+        <table BORDER=1 bordercolor="darkblue"> 
+            <CAPTION ALIGN=bottom> Таблица №1 </CAPTION> 
+            <TR><TD ROWSPAN=2></TD><TH COLSPAN=2>Среднее значение</TH></TR>
+            <TR><TH>Рост</TH><TH>Вес</TH></TR> 
+            <TR><TD>Мужчины</TD><TD ALIGN=center>174</TD><TD ALIGN=center>78</TD></TR> 
+            <TR><TD>Женщины</TD><TD ALIGN=center>165</TD><TD ALIGN=center>56</TD></TR> 
+        </table>
+        <br><br><br>
+        <table id="mytable" border="1" width=30%>
+            <tr>
+                <td>1</td><td>2</td><td>3</td><td>-</td>
+            </tr>
+
+            <tr>
+                <td>4</td><td>5</td><td>6</td><td>-</td>
+            </tr>
+
+            <tr>
+                <td>7</td><td>8</td><td>9</td><td>-</td>
+            </tr>
+        </table>
+        <script>
+            sum("mytable");
+            function sum(ID_Name) {
+                var table = document.getElementById(ID_Name);
+                var sum = 0;
+                for (var row = 0, n = table.rows.length; row < n; row++) {
+                    sum = 0;
+                    for (var column = 0, m = table.rows[row].cells.length; column < m; column++) {
+                        if (column < m - 1) {
+                            sum += parseFloat(getCellValue(ID_Name, row, column));
+                        } else {
+                            setCellValue(ID_Name, row, column, sum);
+                        }
+                    }
+                }
+            }
+            function getCellValue(ID_Name, row, column) {
+                var table = document.getElementById(ID_Name);
+                return parseFloat(table.rows[row].cells[column].innerHTML);
+            }
+            function setCellValue(ID_Name, row, column, value) {
+                var table = document.getElementById(ID_Name);
+                table.rows[row].cells[column].innerHTML = value;
+            }
+        </script>
+        <br><br><br>
+        <div>RegExp</div>
+        <script>
+            var result, re, str;
+            str = "http://www.netscape.com";
+            re = new RegExp("w{3}", "i");
+            console.log(str.match(re));// - return www
+            //Stas
+            str = "Hello it's me. Hello, hello, hello hello. Just saying hello";
+            //re = new RegExp("(\\b\\w+\\b)(?=(.*\\b\\1\\b){2,})", "gi");
+            //var N = 3;
+            //re = new RegExp("(\\b\\w+\\b)(?=(.*\\b\\1\\b){"+(N-1)+",})", "gi");
+            re = /(\b\w+\b)(?=(.*\b\1\b){2,})/gi;
+            result = str.match(re);
+            console.log(result); // Hello, Hello, hello hello
+            alert(result);
+            //Igor
+            str = "1245127";
+            //re = new RegExp("(\\d+)(?=\\d*\\1\\d*)");
+            re =/(\d+)(?=\d*\1\d*)/;
+            result = str.match(re);
+            console.log(result); // 12,12
+            alert(result);
+            //Igor
+            str = "255186255255";
+            //re = new RegExp("(\\d+)(?=(\\d*\\1\\d*){1,})", "gi");// вместо N-1 подставить конкретное число
+            //re = /(\d+)(?=(\d*\1\d*){1,})/;
+            re  = /(\d\d+)(?=(.*\1){2,})/g;
+            result = str.match(re);
+            console.log(result);  // 255
+            alert(result);
+        </script>
+    </body>
+</html>
