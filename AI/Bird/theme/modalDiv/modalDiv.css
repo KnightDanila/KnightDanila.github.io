@@ -1,0 +1,94 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11.06.2016, 1:27:54
+    Author     : KnightDanila
+*/
+/*
+    MD - Modal Div
+*/
+
+/* MD - Modal Div */
+.MD{
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    /*padding-top: 7%;  Location of the box */
+    left: 10%;
+    top: 10%;
+    width: 80%; /* Full width */
+    height: 80%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /*margin: 10% 0% 0% 10%;*/
+}
+
+/* The Modal (background) */
+.MD-background {
+    background-color: rgb(0,0,0); /* Fallback color Black */
+    background-color: rgba(0,0,0,0.4); /* If opacity work it will be like gloss*/
+}
+
+.MD-background-question {
+    background-color: rgb(0,0,0); /* Fallback color Black */
+    background-color: rgba(0,0,0,1); /* If opacity work it will be like gloss*/
+}
+
+.MD-light{
+    border: 1px solid #0FF;
+    -webkit-box-shadow: 0px 8px 56px 4px rgba(0,255,255,0.75);
+    -moz-box-shadow: 0px 8px 56px 4px rgba(0,255,255,0.75);
+    box-shadow: 0px 8px 56px 4px rgba(0,255,255,0.75);
+}
+.MD-header{
+    text-align:center;
+    background-color: rgba(27, 28, 31,0.8);
+    border: 1px solid #0FF;
+    padding: 20px 0px 20px 0px;
+    color: white;
+    font-weight:bolder;
+}
+.MD-content{
+    text-align: center;
+    background-color: rgba(27, 28, 31,0.0);
+    margin: auto;
+    padding: 20px 0px 20px 0px;
+    color: white;
+    font-weight:bold;
+}
+.MD-option{
+    display: block;
+    text-align: center;
+    background-color: rgba(27, 28, 31,0.4);
+    margin: auto;
+    padding: 20px 0px 20px 0px;
+    color: white;
+    font-weight:bold;
+    cursor: pointer;
+}
+.MD-option:hover{
+    text-align:center;
+    background-color: rgba(27, 100, 80,0.7);
+    margin: auto;
+    padding: 20px 0px 20px 0px;
+    color: rgb(57, 250, 180);
+    text-shadow: 1px 1px 3px black, 0 0 3em rgb(57, 250, 200); /* Параметры тени */
+}
+
+/* BUG */
+/*ТУТ ЕСТЬ. БАГ ЭТА ШТУКА НАЛАЗИТ, КАК ИСПРАВИТЬ !? :)*/
+.MD-close-btn{
+    /*padding: 10px 120px 0px 0px;*//*- ЭТО ТЕСТ ДЛЯ БАГА*/
+    padding: 10px 10px 0px 0px;
+    color: #fff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.MD-close-btn:hover,
+.MD-close-btn:focus {
+    color: #0ff;
+    text-decoration: none;
+    cursor: pointer;
+}

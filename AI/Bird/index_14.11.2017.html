@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Flying Bird</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link href="theme/style.css" rel="stylesheet" type="text/css"/>
+        <link href="theme/modalDiv/modalDiv.css" rel="stylesheet" type="text/css"/>
+        <link href="theme/linkDesigner/linkDesigner.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" href="theme/CC4-bird-icon.png"/>
+        <!--LOG-->
+        <link href="js/log/log.css" rel="stylesheet" type="text/css"/>
+        <script src="js/log/log.js" type="text/javascript"></script>
+        <!--Characters-->
+        <script src="js/characters/characters.js" type="text/javascript"></script>
+        <!--Logic-->
+        <script src="js/logic/fuzzySet/chart.js" type="text/javascript"></script>
+        <script src="js/logic/fuzzySet/fuzzySet.js" type="text/javascript"></script>
+        <!--JQuery-->
+        <script src="../../js/libs/jquery/jquery.js" type="text/javascript"></script>
+        <!--Three JS-->
+        <script src="../../js/libs/three.js/three.js" type="text/javascript"></script>
+        <!--Map-->
+        <script src="js/map.js" type="text/javascript"></script>
+        <!--Keys-->
+        <script src="js/keysActions.js" type="text/javascript"></script>
+        <!--Boxes-->
+        <script src="js/boxes.js" type="text/javascript"></script>
+        <!--Light-->
+        <script src="light.js" type="text/javascript"></script>
+    </head>
+    <body onload="loadPage()">
+
+        <div id = "container"></div>
+
+        <div class="accordion vertical">
+            <input type="checkbox" id="CheckboxLog" />
+            <label for="CheckboxLog">Log</label>
+            <div class="content" id="log">
+                Logger
+            </div>
+        </div>
+
+        <script>
+            
+            var moveX = 0, moveZ = 0;
+            var x = 0, y = 0, z = 0;
+            var camera, scene, renderer;
+            var imgArray = ["mountain-range-530657-pxhere.com.jpg", "34454427006_e68809f3ed_o.jpg", "15561371221_68f7976f51_o.jpg"];
+            var imgArrayN = 0;
+            var fov = 70,
+                    texture_placeholder,
+                    isUserInteracting = false,
+                    onMouseDownMouseX = 0, onMouseDownMouseY = 0,
+                    lon = 0, onMouseDownLon = 0,
+                    lat = 0, onMouseDownLat = 0,
+                    phi = 0, theta = 0;
+            var boxes;
+            init();
+            animate();
+            function changePanorama360() {
+                imgArrayN++;
+                if (imgArrayN > imgArray.length - 1) {
+                    imgArrayN = 0;
+                }
+                scene.children[0].material = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture(imgArray[imgArrayN])});
+            }
+
+            
+            function init() {
+
+                var container, mesh;
+                container = document.getElementById('container');
+                camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 1, 1100);
+                camera.target = new THREE.Vector3(0, 0, 0);
+                scene = new THREE.Scene();
+                mesh = new THREE.Mesh(new THREE.SphereGeometry(500, 60, 40), new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture(imgArray[imgArrayN])}));
+                mesh.scale.x = -1;
+                mesh.rotateY(Math.PI);
+                scene.add(mesh);
+                //renderer = window.WebGLRenderingContext ? new THREE.WebGLRenderer() : new THREE.CanvasRenderer(); // Fallback to canvas renderer, if necessary.
+                renderer = new THREE.WebGLRenderer();
+                //renderer = new THREE.CanvasRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+                document.addEventListener('mousedown', onDocumentMouseDown, false);
+                document.addEventListener('mousemove', onDocumentMouseMove, false);
+                document.addEventListener('mouseup', onDocumentMouseUp, false);
+//                document.addEventListener('mousewheel', onDocumentMouseWheel, false);
+//                document.addEventListener('DOMMouseScroll', onDocumentMouseWheel, false);
+                //
+
+                window.addEventListener('resize', onWindowResize, false);
+
+                MAP.mapGeneration(5, 5);
+                createBoxes(0, -40, 0, boxes, 5, MAP.array);
+                
+                addLight(scene);
+            }
+
+            function onWindowResize() {
+
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            function onDocumentMouseDown(event) {
+
+                event.preventDefault();
+                isUserInteracting = true;
+                onPointerDownPointerX = event.clientX;
+                onPointerDownPointerY = event.clientY;
+                onPointerDownLon = lon;
+                onPointerDownLat = lat;
+            }
+
+            function onDocumentMouseMove(event) {
+
+                if (isUserInteracting) {
+
+                    lon = (onPointerDownPointerX - event.clientX) * 0.1 + onPointerDownLon;
+                    lat = (event.clientY - onPointerDownPointerY) * 0.1 + onPointerDownLat;
+                }
+            }
+
+            function onDocumentMouseUp(event) {
+
+                isUserInteracting = false;
+            }
+
+            function onDocumentMouseWheel(event) {
+
+                // WebKit
+
+                if (event.wheelDeltaY) {
+
+                    fov -= event.wheelDeltaY * 0.05;
+                    // Opera / Explorer 9
+
+                } else if (event.wheelDelta) {
+
+                    fov -= event.wheelDelta * 0.05;
+                    // Firefox
+
+                } else if (event.detail) {
+
+                    fov += event.detail * 1.0;
+                }
+
+                camera.projectionMatrix.makePerspective(fov, window.innerWidth / window.innerHeight, 1, 1100);
+                render();
+            }
+
+            function animate() {
+
+                requestAnimationFrame(animate);
+                render();
+            }
+
+            function render() {
+                //move();
+                lat = Math.max(-85, Math.min(85, lat));
+                phi = THREE.Math.degToRad(90 - lat);
+                theta = THREE.Math.degToRad(lon);
+                camera.target.x = 500 * Math.sin(phi) * Math.cos(theta);
+                camera.target.y = 500 * Math.cos(phi);
+                camera.target.z = 500 * Math.sin(phi) * Math.sin(theta);
+                /*
+                 console.log("camera.target.x" + camera.target.x);
+                 console.log("camera.target.y" + camera.target.y);
+                 console.log("camera.target.z" + camera.target.z);
+                 console.log("phi " + phi);
+                 console.log("theta " + theta);
+                 */
+                camera.lookAt(camera.target);
+                
+//                camera.position.x = -x / 5 * Math.sin(theta);
+//                camera.position.y = -y / 5;
+//                camera.position.z = x / 5 * Math.cos(theta);
+                
+                camera.translateZ(moveZ);
+                camera.translateX(moveX);
+                /*
+                 console.log("sin " + Math.sin(theta));
+                 console.log("cos " + Math.cos(theta));
+                 */
+                /*
+                 // distortion
+                 camera.position.x = - camera.target.x;
+                 camera.position.y = - camera.target.y;
+                 camera.position.z = - camera.target.z;
+                 */
+                /*
+                 if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+                 {
+                 videoImageContext.drawImage( video, 0, 0 );
+                 if ( videoTexture ) 
+                 videoTexture.needsUpdate = true;
+                 }
+                 */
+                renderer.render(scene, camera);
+            }
+
+        </script>
+
+
+
+
+        <a href="TOR.html" style="position: absolute; top: 0px;">TOR</a>
+    </body>
+</html>

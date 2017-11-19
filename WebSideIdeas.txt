@@ -1,0 +1,6 @@
+.halloween {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+<img src="img/spider.png" class="halloween">

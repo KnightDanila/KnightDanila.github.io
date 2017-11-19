@@ -1,0 +1,77 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16.11.2016, 20:03:27
+    Author     : KnightDanila
+*/
+
+/*
+    Accordion
+*/
+.accordion [type=radio], .accordion [type=checkbox] {
+    display:none;
+}
+.accordion label {
+    /*top: 0px;*/
+    position: absolute;
+    z-index: 10000;
+    width: 100%;
+    display:block;
+    font-size:16px;
+    line-height:16px;
+    background:rgba(27, 100, 80,0.7);
+    color:#ffffff;
+    cursor:pointer;
+    text-transform:uppercase;
+    left: 0px;
+    padding: 5px 0px 5px 0px;
+    text-align: center;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+.accordion [type=radio]:checked ~ label, .accordion [type=checkbox]:checked ~ label {
+    background:#960b22;
+}
+
+.accordion .content {
+    position: absolute;
+    z-index: 10000;
+    /*
+    You can copy all ".vertical .content {...}" here - 
+    because I still do not understand what is 
+    ".accordion .content {}" it doing :D
+    */
+}
+
+.vertical .content {
+    position: absolute;
+    z-index: 10000;
+    /*top: 34px;*/
+    left: 10px;
+    right: 10px;
+    width: auto;
+    background:rgba(27, 100, 80,0.5);
+    margin: 26px 0px 0px 0px;
+    /*height: 0px;*/
+    max-height: 0;
+    overflow-y: hidden;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+
+    /*-webkit-transition: all .5s ease-out 0.5s;*/
+}
+.vertical [type=checkbox]:checked ~ label ~ .content {
+    /*height: auto;*/
+    max-height: 100%;
+
+}
+
