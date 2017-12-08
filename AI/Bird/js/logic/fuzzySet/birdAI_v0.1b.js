@@ -39,7 +39,6 @@ Math.degrees = function (radians) {
 };
 clock = new THREE.Clock();
 clock.start();
-
 var birdAI = {
     /* При повороте вектора направления, должна изменяться вся ось, то есть
      * вместе с фигурой должна поворачиваться вся её ось координат и только её ось, то есть
@@ -47,27 +46,26 @@ var birdAI = {
      * Только так можно симулировать управление самолётом-птицей
      */
     birdSize: new THREE.Vector3(10, 10, 10),
+    birdMesh: null,
+    birdMeshGroup: new THREE.Group(),
     flyingPosition: new THREE.Vector3(0, 0, 0),
     flyingDirection: new THREE.Vector3(0.0, 0.0, 1.0), // vector3D // X Y Z
     flyingDirectionBox: null,
     keelPosition: null, // vector3D // X Y Z
-    keelDistanceY: null, // vector3D // X Y Z
-    birdMeshDistanceY: null, // vector3D // X Y Z
-    flyingDownBox: null, // vector3D // X Y Z
     keelBox: null,
-    birdMesh: null,
-    birdMeshGroup: new THREE.Group(),
+    flyingDownBox: null, // Min height and also Shadow
+    flyingUpBox: null, // Max height and also Shadow
+
     eyesPos: 5, // int
     speed: 0.0,
-    speedMax: 1,
-    boost: 0.1, //
+    speedMax: 0.2,
+    boost: 0.01, //
 
     stabilizeAutoON: false,
     maxHeight: 4, //maxHeight of flying
-    minheight: -40, //
+    minHeight: -40, //
 
     barriers: [], //Array or List of barriers
-
 
 
     birdEyesL1: [], // Level 1
@@ -91,7 +89,7 @@ var birdAI = {
         this.birdSize = new THREE.Box3().setFromObject(this.birdMesh);
         console.log(this.birdSize.getSize());
         //
-        // FlyingDirection Helper
+        // FlyingDirection Box
         var geometry = new THREE.BoxGeometry(3, 3, 3);
         var material = new THREE.MeshBasicMaterial({color: 0xFFFF00, wireframe: true});
         this.flyingDirectionBox = new THREE.Mesh(geometry, material);
@@ -125,58 +123,26 @@ var birdAI = {
         this.flyingDownBox = new THREE.Mesh(geometry, material);
         this.flyingDownBox.position.set(
                 this.flyingPosition.x,
-                this.minheight - 3 / 2,
+                this.minHeight - 3 / 2,
                 this.flyingPosition.z
                 );
         scene.add(this.flyingDownBox);
-        //this.flyingDirectionBox.position.copy(this.flyingDirection.multiplyScalar(5));
-        //scene.add(this.flyingDirectionBox);
-
-        A = this.flyingPosition.y - this.keelPosition.y;
-        //B = this.flyingPosition.z - this.keelPosition.z;
-        //this.keelDistanceY = A * A + B * B;
-        this.keelDistanceY = A;
-        /*                  
-         *          ------\      B
-         *          bird   \  ------|                   -----> Z
-         *           _______\       |                   |
-         *              ^           |                   |
-         *              | \         |                   V Y
-         *              |  \        |                   
-         *            A |   \ C     | A                 C^2 = A^2 + B^2
-         *              |    \      |
-         *              |     \     |     
-         *              |      \\\\\\\\\
-         *              |------\  keel \
-         *                 B   \\\\\\\\\ 
-         *
-         */
-
-        //this.keelDistanceY = Math.abs(this.flyingDownBox.position.y - this.flyingPosition.y) - Math.abs(this.flyingDownBox.position.y - this.keelPosition.y); // Потому, что flyingDownBox < keelPosition всегда!!!
-        /*
-         *          ------\
-         *          bird   \   ---- |
-         *           _______\       |
-         *              ^           |
-         *            x | ?????     |   
-         *              V           |
-         *          \\\\\\\\\       |   a       a - b = x
-         *   |----  \  keel \       |
-         *   |      \\\\\\\\\       |
-         *  b|                      |
-         *   |                      |     
-         *   |      *********       |
-         *   |----  *DownBox*  ---- |
-         *          *********
-         *
-         */
-
-
+        //
+        //flyingUpBox
+        var geometry = new THREE.BoxGeometry(3, 3, 3);
+        var material = new THREE.MeshBasicMaterial({color: 0xFFFF00, wireframe: true});
+        this.flyingUpBox = new THREE.Mesh(geometry, material);
+        this.flyingUpBox.position.set(
+                this.flyingPosition.x,
+                this.maxHeight - 3 / 2,
+                this.flyingPosition.z
+                );
+        scene.add(this.flyingUpBox);
     },
+    // Animation
     animation: function () {
-        this.fly();
+        
     },
-    minDis: null,
     stabilize: function () {
         var matrix = new THREE.Matrix4();
         matrix.extractRotation(this.birdMeshGroup.matrix);
@@ -185,14 +151,14 @@ var birdAI = {
                 zAxis = new THREE.Vector3(0, 0, 0);
         this.birdMeshGroup.matrix.extractBasis(xAxis, yAxis, zAxis);
         /*
-        if (clock.getElapsedTime() > 1) {
-            console.log("-----------");
-            console.log(xAxis);
-            console.log(yAxis);
-            console.log(zAxis);
-            clock.start();
-        }
-        */
+         if (clock.getElapsedTime() > 1) {
+         console.log("-----------");
+         console.log(xAxis);
+         console.log(yAxis);
+         console.log(zAxis);
+         clock.start();
+         }
+         */
         /**/
         if (this.stabilizeAutoON) {
             if (Math.abs(Math.round(xAxis.y * 10) / 10) > 0.01 || yAxis.y < 0) {
@@ -207,62 +173,6 @@ var birdAI = {
                 this.stabilizeAutoON = false;
             }
         }
-
-        /*
-         if (this.stabilizeAutoON) {
-         //var y = Math.abs(this.flyingDownBox.position.y - this.flyingPosition.y) - Math.abs(this.flyingDownBox.position.y - this.keelPosition.y);
-         //D = this.flyingPosition.x - this.keelPosition.x;
-         y = this.flyingPosition.y - this.keelPosition.y;
-         //B = this.flyingPosition.z - this.keelPosition.z;
-         d = Math.abs(this.flyingPosition.x) - Math.abs(this.keelPosition.x);
-         y = Math.round(y);
-         
-         if (this.minDis == null) {
-         this.minDis = y;
-         } else {
-         //this.minDis = y;
-         if (y - 1 > this.minDis && y - 1 > this.minDis ) {
-         if (y < this.minDis) {
-         this.keelDistanceY = y;
-         this.moveState.rollRight = 1;
-         } else {
-         this.moveState.rollRight = 0;
-         this.moveState.rollLeft = 1;
-         }
-         } else {
-         this.moveState.rollRight = 0;
-         this.moveState.rollLeft = 0;
-         }
-         }
-         */
-        if (this.flyingPosition.y < this.keelPosition.y) {
-
-            //if (d + dt < 0 || d - dt > 0) {
-            //    if (d + dt < 0) {
-            // this.keelPosition.X;
-
-
-            // Gif (){}
-            //     } else {
-            //       this.moveState.rollLeft = 1;
-            //    }
-
-
-        }
-
-        /*
-         if (y < this.keelDistanceY) {
-         // this.keelPosition.X;
-         this.moveState.rollRight = 1;
-         } else {
-         this.moveState.rollRight = 0;
-         this.stabilizeAutoON = false;
-         }
-         */
-
-
-        /**/
-
     },
     updateFlyingDirection: function () {
         this.update();
@@ -270,9 +180,9 @@ var birdAI = {
         this.flyingDirection.setFromMatrixPosition(this.flyingDirectionBox.matrixWorld);
         this.flyingPosition.copy(this.birdMeshGroup.position);
         this.keelPosition.setFromMatrixPosition(this.keelBox.matrixWorld);
-        this.flyingDownBox.position.set(this.flyingPosition.x, this.minheight - 3 / 2, this.flyingPosition.z);
+        this.flyingDownBox.position.set(this.flyingPosition.x, this.minHeight - 3 / 2, this.flyingPosition.z);
+        this.flyingUpBox.position.set(this.flyingPosition.x, this.maxHeight - 3 / 2, this.flyingPosition.z);
         this.stabilize();
-
     },
     flyLeftRight: function (deg) {
         //this.flyingDirection.x = Math.cos(Math.acos(this.flyingDirection.x) + THREE.Math.degToRad(deg));
@@ -297,22 +207,16 @@ var birdAI = {
     //flyingMainAi
     fly: function () {
         this.updateFlyingDirection();
-        //this.flyLeftRight(3);
-        //this.flyUpDown(3);
+        this.animation();
 
-//        if(true){
-//            this.speed=this.boost*this.maxSpeed;
-//        }
-        if (this.speed < this.maxSpeed) {
-            //this.speed += this.boost;
-        } else {
-            //this.speed = this.maxSpeed;
+        if (this.speed != this.speedMax) {
+            if (this.speed < this.speedMax) {
+                this.speed += this.boost;
+            } else {
+                this.speed = this.speedMax;
+            }
         }
 
-        //temp = this.flyingDirection.clone().normalize();
-        //temp.multiplyScalar(this.speed);
-        //this.position.add(temp);
-        //this.birdMesh.position.copy(this.position);
     },
     getFace: function (mesh) {
         var matrix = new THREE.Matrix4();
@@ -345,7 +249,6 @@ var birdAI = {
 
     movementSpeed: 0.1,
     rollSpeed: THREE.Math.degToRad(1),
-    dragToLook: false,
     autoForward: false,
     clock: new THREE.Clock(),
     // disable default target object behavior
@@ -361,6 +264,7 @@ var birdAI = {
         this.moveState = {up: 0, down: 0, left: 0, right: 0, forward: 0, back: 0, pitchUp: 0, pitchDown: 0, yawLeft: 0, yawRight: 0, rollLeft: 0, rollRight: 0};
     },
     update: function () {
+        this.movementSpeed = this.speed;
         this.moveState.forward = 1;
         this.updateMovementVector();
         this.updateRotationVector();

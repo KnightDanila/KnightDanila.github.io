@@ -49,18 +49,21 @@ and open the template in the editor.
     */
 }
 
+
+
 .vertical .content {
     position: absolute;
     z-index: 10000;
     /*top: 34px;*/
     left: 10px;
     right: 10px;
-    width: auto;
+    /*width: auto;*/
     background:rgba(27, 100, 80,0.5);
     margin: 26px 0px 0px 0px;
     /*height: 0px;*/
     max-height: 0;
     overflow-y: hidden;
+    
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
     -ms-transition: all 1s ease-in-out;
@@ -71,7 +74,8 @@ and open the template in the editor.
 }
 .vertical [type=checkbox]:checked ~ label ~ .content {
     /*height: auto;*/
-    max-height: 100%;
+    /*max-height: 100%;*/
+    max-height: 1000px; /* IT MUST BE MAX. I write here 1000px*/
 
 }
 

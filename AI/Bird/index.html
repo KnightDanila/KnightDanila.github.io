@@ -32,7 +32,7 @@ and open the template in the editor.
         <!--Light-->
         <script src="light.js" type="text/javascript"></script>
         <!--Bird AI-->
-        <script src="js/logic/fuzzySet/birdAI_v0.1a.js" type="text/javascript"></script>
+        <script src="js/logic/fuzzySet/birdAI_v0.1b.js" type="text/javascript"></script>
     </head>
     <body onload="loadPage()">
 
@@ -73,9 +73,9 @@ and open the template in the editor.
 
 
             function init() {
-                
+
                 log.ON_elemID = false;
-                
+
                 var container, mesh;
                 container = document.getElementById('container');
                 camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 1, 1100);
@@ -170,10 +170,11 @@ and open the template in the editor.
             function cameraPlayerOrBirdEyes() {
 
                 if (birdEyes) {
-                    
-//                    camera.position.x = birdAI.position[0];
-//                    camera.position.y = birdAI.position[1];
-//                    camera.position.z = birdAI.position[2];
+                    /* 
+                     camera.position.x = birdAI.position[0];
+                     camera.position.y = birdAI.position[1];
+                     camera.position.z = birdAI.position[2];
+                     */
                     camera.position.copy(birdAI.flyingPosition);
 
                     camera.target.x = birdAI.flyingDirection.x;
@@ -182,20 +183,19 @@ and open the template in the editor.
 
                     camera.lookAt(camera.target);
 
-                    
                 } else {
                     lat = Math.max(-85, Math.min(85, lat));
                     phi = THREE.Math.degToRad(90 - lat);
                     theta = THREE.Math.degToRad(lon);
-                    
-//                    camera.target.x = 500 * Math.sin(phi) * Math.cos(theta);
-//                    camera.target.y = 500 * Math.cos(phi);
-//                    camera.target.z = 500 * Math.sin(phi) * Math.sin(theta);
-                    
+                    /*
+                     camera.target.x = 500 * Math.sin(phi) * Math.cos(theta);
+                     camera.target.y = 500 * Math.cos(phi);
+                     camera.target.z = 500 * Math.sin(phi) * Math.sin(theta);
+                     */
                     camera.target.x = camera.position.x + 500 * Math.sin(phi) * Math.cos(theta);
                     camera.target.y = camera.position.y + 500 * Math.cos(phi);
                     camera.target.z = camera.position.z + 500 * Math.sin(phi) * Math.sin(theta);
-                    
+
                     /*
                      console.log("camera.target.x" + camera.target.x);
                      console.log("camera.target.y" + camera.target.y);
@@ -211,7 +211,7 @@ and open the template in the editor.
 
                     camera.translateZ(moveZ);
                     camera.translateX(moveX);
-                    
+
                     /*
                      console.log("sin " + Math.sin(theta));
                      console.log("cos " + Math.cos(theta));

@@ -33,13 +33,15 @@ $(document).keydown(function (e) {
         if (birdEyes) {
             birdAI.flyUpDown(-3);
             birdAI.moveState.pitchUp = 1;
+            birdAI.stabilizeAutoON = false;
         }
     }
     if (keys[DOWN]) {
         moveZ = 1;
         if (birdEyes) {
             birdAI.flyUpDown(3);
-            birdAI.moveState.pitchDown = 1
+            birdAI.moveState.pitchDown = 1;
+            birdAI.stabilizeAutoON = false;
         }
     }
     if (keys[LEFT]) {
@@ -47,6 +49,7 @@ $(document).keydown(function (e) {
         if (birdEyes) {
             birdAI.flyLeftRight(3);
             birdAI.moveState.yawLeft = 1;
+            birdAI.stabilizeAutoON = false;
         }
     }
     if (keys[RIGHT]) {
@@ -54,6 +57,7 @@ $(document).keydown(function (e) {
         if (birdEyes) {
             birdAI.flyLeftRight(-3);
             birdAI.moveState.yawRight = 1;
+            birdAI.stabilizeAutoON = false;
         }
     }
     if (keys[B_KEY]) {
@@ -66,7 +70,7 @@ $(document).keydown(function (e) {
 
 
 
-
+    
 
 
 
