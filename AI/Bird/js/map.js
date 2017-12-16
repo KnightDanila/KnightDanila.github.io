@@ -17,7 +17,7 @@ var MAP = {
 
         for (i = 1; i < rows + 1; i++) {
             for (j = 1; j < columns + 1; j++) {
-                if (Math.round(Math.random()*2) == 2) {
+                if (Math.round(Math.random()*2) > 0.9) {
                     this.array[i][j] = Math.random() * 3; // [0-1) * 3 -> [0,3)
                 } else {
                     this.array[i][j] = 0;

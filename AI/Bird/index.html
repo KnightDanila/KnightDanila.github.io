@@ -32,11 +32,61 @@ and open the template in the editor.
         <!--Light-->
         <script src="light.js" type="text/javascript"></script>
         <!--Bird AI-->
-        <script src="js/logic/fuzzySet/birdAI_v0.1b.js" type="text/javascript"></script>
+        <script src="js/logic/fuzzySet/birdAI_v0.3a.js" type="text/javascript"></script>
+        <!--Color-->
+        <script src="theme/colorGenerators/colorGenerators.js" type="text/javascript"></script>
     </head>
     <body onload="loadPage()">
 
         <div id = "container"></div>
+
+        <table id="AITable" style="position: absolute; bottom: 0px; right: 0px; background-color: white; font-size: xx-large">
+            <tr>
+                <th>AI00</th>
+                <th>AI01</th> 
+                <th>AI02</th>
+            </tr>
+            <tr>
+                <th>AI10</th>
+                <th>AI11</th> 
+                <th>AI12</th>
+            </tr>
+            <tr>
+                <th>AI20</th>
+                <th>AI21</th> 
+                <th>AI22</th>
+            </tr>
+        </table>
+
+        <script>
+            function tableUpdate(tableID, array2D) {
+                var tableBody = document.getElementById(tableID);
+
+                // Reset the table
+                tableBody.innerHTML = "";
+                // Build the new table
+                array2D.forEach(function (row) {
+                    var newRow = document.createElement("tr");
+                    tableBody.appendChild(newRow);
+
+                    if (row instanceof Array) {
+                        row.forEach(function (cell) {
+                            var newCell = document.createElement("td");
+                            newCell.textContent = cell;
+                            newRow.appendChild(newCell);
+                        });
+                    } else {
+                        newCell = document.createElement("td");
+                        newCell.textContent = row;
+                        newRow.appendChild(newCell);
+                    }
+                });
+
+            }
+            function tableColor(tableID, colorHex) {
+                document.getElementById(tableID).style.backgroundColor = colorHex;
+            }
+        </script>
 
         <div class="accordion vertical">
             <input type="checkbox" id="CheckboxLog" />
@@ -99,11 +149,12 @@ and open the template in the editor.
 
                 window.addEventListener('resize', onWindowResize, false);
 
-                MAP.mapGeneration(30, 30);
-                createBoxes(0, -40, 0, boxes, 5, MAP.array);
+                MAP.mapGeneration(20, 20);
+                boxes = createBoxes(0, -40, 0, boxes, 40, MAP.array);
 
                 addLight(scene);
                 birdAI.init(scene);
+                birdAI.barriersAdd(boxes);
             }
 
             function onWindowResize() {
@@ -251,6 +302,7 @@ and open the template in the editor.
             }
 
         </script>
+
 
 
         <a href="TOR.html" style="position: absolute; top: 0px;">TOR</a>

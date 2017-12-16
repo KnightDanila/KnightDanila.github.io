@@ -12,6 +12,7 @@
 function createBoxes(x, y, z, boxes, size, matrix) {
     //matrix - must be square
     boxes = [];
+    boxesList = new Array();
     var distance = 0;
     var boxWidthX = size, boxHeightY = size, boxDepthZ = size;
     /*
@@ -46,15 +47,17 @@ function createBoxes(x, y, z, boxes, size, matrix) {
                 matrix[i][j] = Math.round(matrix[i][j]);
                 var geometry = new THREE.BoxGeometry(boxWidthX, boxHeightY * matrix[i][j], boxDepthZ);
                 //var material = new THREE.MeshBasicMaterial({color: 0xffff00});
-                var material = new THREE.MeshBasicMaterial({color: 0x00C400, wireframe: true});
+                //var material = new THREE.MeshBasicMaterial({color: parseInt(colorRandomHex0x()), wireframe: true});
                 //var material = new THREE.MeshDepthMaterial();
-                //var material = new THREE.MeshPhongMaterial({color: 0xffff00});
+                var material = new THREE.MeshPhongMaterial({color: colorRandomHex0x()});
                 //var material = new THREE.MeshLambertMaterial({color: 0xffff00});
                 //var material = new THREE.MeshStandardMaterial({color: 0xffff00});
 
                 boxes[i][j] = new THREE.Mesh(geometry, material);
                 boxes[i][j].position.set(toCenterX + boxWidthX * i, toCenterY + (boxHeightY * matrix[i][j]) / 2, toCenterZ + boxDepthZ * j);
                 scene.add(boxes[i][j]);
+                
+                boxesList.push(boxes[i][j]);
                 
                 var boxAxis = new THREE.AxisHelper(20);
                 boxes[i][j].add(boxAxis);
@@ -66,5 +69,5 @@ function createBoxes(x, y, z, boxes, size, matrix) {
         log.add("<br>");
     }
 
-
+    return boxesList;
 }
