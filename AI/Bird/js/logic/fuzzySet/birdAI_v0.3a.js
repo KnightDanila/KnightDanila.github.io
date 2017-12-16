@@ -527,7 +527,7 @@ var birdAI = {
         this.collisionsMatrix = listToMatrix(collisionsList, 3);
         tableUpdate("AITable", this.collisionsMatrix);
     },
-    AION: true,
+    AION: false,
     AIPause: false,
     AI: function () {
         if (this.AION && !this.AIPause) {
