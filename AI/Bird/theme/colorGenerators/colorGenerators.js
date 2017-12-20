@@ -45,3 +45,14 @@ function colorRandomHex0xGrayscale() {
     var value = Math.floor(Math.random() * 255 + 1); // 256 = 0xFF
     return (value << 16) | (value << 8) | value;
 }
+
+
+function colorRandomHex0xWhitescale() {
+    var value = getRandomInt(170,256); // 256 = 0xFF
+    return (value << 16) | (value << 8) | value;
+}
+
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}

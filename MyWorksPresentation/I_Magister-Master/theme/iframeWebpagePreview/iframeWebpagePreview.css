@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08.11.2017, 16:29:08
+    Author     : KnightDanila
+*/
+
+.iframeWP-window-small, .iframeWP-window-full{
+    /*display: none;*/
+    /*display: block;*/
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    
+    margin: 2%;
+    height: 10%;
+    border-width: 0px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+.iframeWP-window-full {
+    /*display: block;*/
+    cursor: default;
+    height: 92%;
+    width: 96%;
+    z-index: 25;
+}
+
+.iframeWP-button-right-top{
+    position: absolute;
+    color: white;
+    top: 0;
+    right: 0;
+    font-size: 2em;
+    z-index: 10000;
+}

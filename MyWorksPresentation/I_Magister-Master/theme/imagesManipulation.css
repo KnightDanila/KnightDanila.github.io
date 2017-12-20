@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28.05.2017, 19:00:50
+    Author     : KnightDanila
+*/
+
+/*TWO OR MORE IMAGES IN ONE LINE*/
+.imgContainer{
+    float:left;
+}
+/*HOW TO USE*/
+/*<div class="image123">
+    
+        <img class="imgContainer" src="/images/tv.gif" height="200" width="200"/>
+        <p class="imgContainer">This is image 1</p>
+    
+    <div class="imgContainer">
+        <img class="middle-img" src="/images/tv.gif"/ height="200" width="200"/>
+        <p>This is image 2</p>
+    </div>
+    <div class="imgContainer">
+         <img src="/images/tv.gif"/ height="200" width="200"/>
+        <p>This is image 3</p>
+    </div>
+</div>*/

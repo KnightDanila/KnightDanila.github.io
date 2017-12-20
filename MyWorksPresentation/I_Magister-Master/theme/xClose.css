@@ -1,0 +1,19 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08.11.2017, 18:37:17
+    Author     : KnightDanila
+*/
+
+.x-close-right-top{
+    position: absolute;
+    color: white;
+    top: 0;
+    right: 0;
+    font-size: 2em;
+    z-index: 10000;
+}
+

@@ -49,7 +49,7 @@ function createBoxes(x, y, z, boxes, size, matrix) {
                 //var material = new THREE.MeshBasicMaterial({color: 0xffff00});
                 //var material = new THREE.MeshBasicMaterial({color: parseInt(colorRandomHex0x()), wireframe: true});
                 //var material = new THREE.MeshDepthMaterial();
-                var material = new THREE.MeshPhongMaterial({color: colorRandomHex0x()});
+                var material = new THREE.MeshPhongMaterial({color: colorRandomHex0xWhitescale()}); // colorRandomHex0x() colorRandomHex0xGrayscale
                 //var material = new THREE.MeshLambertMaterial({color: 0xffff00});
                 //var material = new THREE.MeshStandardMaterial({color: 0xffff00});
 

@@ -73,7 +73,7 @@ var birdAI = {
 
     eyesPos: 5, // int
     speed: 0.0,
-    speedMax: 0.2,
+    speedMax: 0.3,
     boost: 0.01, //
     boostDefault: 0.01, //
     birdUnderControlNow: false, // true - if somebody controlled a bird
@@ -185,7 +185,7 @@ var birdAI = {
          *  как от этого зависит начальная форма этих блоков :)
          *  А то прица летит по оси Z, а облоки повернуты в Y
          */
-        var birdVisionSize = 5;
+        var birdVisionSize = 7;
         // LEVEL 0
         var distance0 = birdVisionSize;
         this.birdVisionL0Box = Array();
@@ -418,7 +418,7 @@ var birdAI = {
             }
         }
         this.stabilize();
-        if (clock.getElapsedTime() > 0.1) {
+        if (clock.getElapsedTime() > 0.2) {
             clock.start();
             this.vision();
             this.AI();

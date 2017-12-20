@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 var keysCode = {
     BACKSPACE: 8,
     TAB: 9,
@@ -100,72 +101,21 @@ var keys = {};
 $(document).keydown(function (e) {
     keys[e.keyCode] = 1;
     console.log("e.keyCode: " + e.keyCode);
+    
     if (keys[keysCode.ENTER]) {
-        changePanorama360();
+        console.log("ENTER PRESSED");
+        iframeWP.iframeWPSmallFull();
     }
     if (keys[keysCode.KEY_P]) {
-        //console.log("P_KEY PRESSED");
+        console.log("KEY_P PRESSED");
     }
     if (keys[keysCode.KEY_G]) {
-        FPM3DFrameSmallFull();
+        console.log("KEY_G PRESSED");
     }
-    if (keys[keysCode.UP_ARROW]) {
-        moveZ = -1;
-        if (birdEyes) {
-            birdAI.flyDown();
-            birdAI.AIPause = true;
-        }
-    }
-    if (keys[keysCode.DOWN_ARROW]) {
-        moveZ = 1;
-        if (birdEyes) {
-            birdAI.flyUp();
-            birdAI.AIPause = true;
-        }
-    }
-    if (keys[keysCode.LEFT_ARROW]) {
-        moveX = -1;
-        if (birdEyes) {
-            birdAI.flyLeft();
-            birdAI.AIPause = true;
-        }
-    }
-    if (keys[keysCode.RIGHT_ARROW]) {
-        moveX = 1;
-        if (birdEyes) {
-            birdAI.flyRight();
-            birdAI.AIPause = true;
-        }
-    }
-    if (keys[keysCode.KEY_B]) {
-        if (birdEyes) {
-            birdEyes = false;
-        } else {
-            birdEyes = true;
-        }
-    }
-    if (keys[keysCode.KEY_A]) {
-        if (birdAI.AION) {
-            birdAI.AION = false;
-        } else {
-            birdAI.AION = true;
-        }
-    }
-    if (keys[keysCode.KEY_S]) {
-        if (birdAI.stabilizeAutoON) {
-            birdAI.stabilizeAutoON = false;
-        } else {
-            birdAI.stabilizeAutoON = true;
-        }
-    }
-
 
 
 });
+
 $(document).keyup(function (e) {
-    birdAI.AIPause = false;
     keys[e.keyCode] = 0;
-    birdAI.moveStateZero();
-    moveZ = 0;
-    moveX = 0;
 });

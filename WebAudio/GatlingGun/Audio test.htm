@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="/static/js/wbhack.js?v=1493367442.0" charset="utf-8"></script>
+
+		<script type="text/javascript">
+		__wbhack.init('');
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="/static/css/iconochive.css?v=1493367442.0" />
+
+<!-- End Wayback Rewrite JS Include -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Audio test</title>
+	</head>
+	<body bgcolor="black" text="white">
+		<div id="log"></div>
+	</body>
+	<script type="text/javascript">
+		function log(msg) {
+			document.getElementById('log').innerHTML += msg + '<br />';
+		};
+
+		var LibCanvasAudio = function (file) {
+			this.audio = new Audio;
+			this.src(file);
+		};
+
+		LibCanvasAudio.prototype = {
+			src : function (file) {
+				var codec = this.getSupport();
+				if (!codec) throw 'AudioNotSupported';
+				this.audio.src = file.replace(/\*/g, this.getSupport());
+				log('using ' + codec);
+				this.audio.load();
+				return this;
+			},
+			getSupport : function () {
+				return !this.audio.canPlayType ? false :
+					this.audio.canPlayType('audio/ogg;')  ? 'ogg' :
+					this.audio.canPlayType('audio/mpeg;') ? 'mp3' : false;
+			},
+			cloneAudio : function () {
+				if (window.opera) { // Reported Opera bug DSK-309302
+					var audioClone = new Audio;
+					audioClone.src = this.audio.src;
+				} else {
+					audioClone = this.audio.cloneNode(true);
+				}
+				audioClone.load();
+				audioClone.play();
+				audioClone.muted = true;
+				return audioClone;
+			},
+			gatling : function (count) {
+				this.barrels = [];
+				this.gatIndex =  0;
+				while (count--) {
+					this.barrels.push(this.cloneAudio());
+				}
+				return this;
+			},
+			getNext : function () {
+				var elem = this.barrels[this.gatIndex];
+				++this.gatIndex >= this.barrels.length && (this.gatIndex = 0);
+				return elem;
+			},
+			playNext : function () {
+				var elem = this.getNext();
+				elem.muted = false;
+				elem.readyState || log('not loaded');
+				elem.pause();
+				// firefox 3.5 starting audio bug
+				elem.currentTime = 0.025;
+				elem.play();
+				return this;
+			}
+		};
+
+		var shotSound = new LibCanvasAudio('explosion.*').gatling(6);
+
+		window.addEventListener('keydown', function (e) {
+			if (e.keyCode == 32) { // space
+				log('barrel ' + (shotSound.gatIndex+1) + ' of ' + shotSound.barrels.length);
+				shotSound.playNext();
+			}
+		}, false);
+
+		log('press «Space»');
+	</script>
+</html>
