@@ -14,7 +14,7 @@ function createBoxes(x, y, z, boxes, size, matrix) {
     boxes = [];
     boxesList = new Array();
     var distance = 0;
-    var boxWidthX = size, boxHeightY = size, boxDepthZ = size;
+    var boxWidthX = size*2, boxHeightY = size, boxDepthZ = size*2;
     /*
      * 0 1 0
      * 3 3 3

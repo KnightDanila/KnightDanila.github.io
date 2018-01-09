@@ -187,8 +187,13 @@ and open the template in the editor.
                         <br>
                         <img src="data/PIC_GIF_DoomWalking.gif" alt=""/>
                     </section>
+                    <section data-state="WalkingTest4">
+                        WalkingTest4
+                        <br>
+                        <img src="data/PIC_GIF_DoomWalking.gif" alt=""/>
+                    </section>
                 </section>
-                
+
                 <section>
                     <section data-background-image="data/PIC_BIRD_1.png">
                         <h2 style="color: #00003f;">TOR AI Bird</h2>
@@ -221,7 +226,7 @@ and open the template in the editor.
                         <img src="data/PIC_BIRD_7.png" alt=""/>
                         <img src="data/PIC_BIRD_8.png" alt=""/>
                     </section>
-                    
+
                     <section data-state="BirdAI_TOR" style="">
                         BirdAI_TOR
                         <br><br><br><br>
@@ -233,7 +238,7 @@ and open the template in the editor.
                         <br><br><br><br>
                     </section>
                 </section>
-                
+
                 <!--                <section> 
                                     <section>
                                         <h2>Так, нужно что-то протестить</h2>
@@ -444,7 +449,7 @@ and open the template in the editor.
 
             Reveal.addEventListener('WalkingTest1', function () {
                 iframeWP.iframeWPSetHref('../../Walking/test_1.html');
-                
+
             }, false);
             Reveal.addEventListener('WalkingTest2', function () {
                 iframeWP.iframeWPSetHref('../../Walking/test_2.html');
@@ -452,14 +457,17 @@ and open the template in the editor.
             Reveal.addEventListener('WalkingTest3', function () {
                 iframeWP.iframeWPSetHref('../../Walking/test_3.html');
             }, false);
+            Reveal.addEventListener('WalkingTest4', function () {
+                iframeWP.iframeWPSetHref('../../Walking/test_4.html');
+            }, false);
             Reveal.addEventListener('BirdAI_TOR', function () {
-             iframeWP.iframeWPSetHref('../../AI/Bird/TOR.html');
-             }, false);
-             Reveal.addEventListener('BirdAI', function () {
-             iframeWP.iframeWPSetHref('../../AI/Bird/index.html');
-             }, false);
-            
-            
+                iframeWP.iframeWPSetHref('../../AI/Bird/TOR.html');
+            }, false);
+            Reveal.addEventListener('BirdAI', function () {
+                iframeWP.iframeWPSetHref('../../AI/Bird/index.html');
+            }, false);
+
+
 
         </script>
 

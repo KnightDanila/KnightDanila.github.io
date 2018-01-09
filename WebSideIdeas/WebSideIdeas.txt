@@ -5,4 +5,16 @@
 }
 <img src="img/spider.png" class="halloween">
 
+calc(50% - 500px);
+body.new-year .content:after {
+    content: '';
+    background: url(../../img/new_year/dog.png) no-repeat bottom;
+    position: fixed;
+    width: calc(50% - 500px);
+    height: 300px;
+    bottom: 0;
+    z-index: 1;
+    background-size: contain;
+    left: 0;
+}
 

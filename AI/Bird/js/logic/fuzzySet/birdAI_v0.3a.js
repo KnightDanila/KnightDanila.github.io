@@ -51,6 +51,14 @@ function listToMatrix(list, elementsPerSubArray) {
 
     return matrix;
 }
+function containsElemID(arr, elem) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].id === elem.id) {
+            return true;
+        }
+    }
+    return false;
+}
 
 clock = new THREE.Clock();
 clock.start();
@@ -60,6 +68,7 @@ var birdAI = {
      * у других фигур ось остаётся таже.
      * Только так можно симулировать управление самолётом-птицей
      */
+    // BIRD
     birdSize: new THREE.Vector3(5, 5, 5),
     birdMesh: null,
     birdMeshGroup: new THREE.Group(),
@@ -72,14 +81,20 @@ var birdAI = {
     flyingUpBox: null, // Max height and also Shadow
 
     eyesPos: 5, // int
+
+    //SPEED
     speed: 0.0,
-    speedMax: 0.3,
+    speedMax: 0.7,
     boost: 0.01, //
     boostDefault: 0.01, //
     birdUnderControlNow: false, // true - if somebody controlled a bird
+
+    //STABILIZE
     stabilizeAutoON: true,
     stabilizePause: true,
-    stabilizeUpdate: false,
+    stabilizeUpdate: false, //
+
+    //HEIGHT
     maxHeight: 100, //maxHeight of flying
     minHeight: -40, //
 
@@ -253,7 +268,7 @@ var birdAI = {
             }
         }
         // LEVEL 3
-        var distance3 = 1 * (birdVisionSize / 3);
+        var distance3 = 1.5 * (birdVisionSize / 3);
         this.birdVisionL3Box = Array();
         {
             // Хочу что бы блок был distance3 в даль
@@ -325,7 +340,7 @@ var birdAI = {
         //this.flyingDirection = this.getFace(this.birdMesh);
         this.flyingDirection.setFromMatrixPosition(this.flyingDirectionBox.matrixWorld);
         this.flyingPosition.copy(this.birdMeshGroup.position);
-        this.keelPosition.setFromMatrixPosition(this.keelBox.matrixWorld);
+        //this.keelPosition.setFromMatrixPosition(this.keelBox.matrixWorld);
         this.flyingDownBox.position.set(this.flyingPosition.x, this.minHeight - 3 / 2, this.flyingPosition.z);
         this.flyingUpBox.position.set(this.flyingPosition.x, this.maxHeight - 3 / 2, this.flyingPosition.z);
     },
@@ -407,6 +422,7 @@ var birdAI = {
         this.update();
         this.updateFlyingVectors();
         this.animation();
+
         if (this.speed != this.speedMax || this.boost != this.boostDefault) {
             if (this.speed < this.speedMax) {
                 this.speed += this.boost;
@@ -417,17 +433,20 @@ var birdAI = {
                 this.speed = this.speedMax;
             }
         }
+
         this.stabilize();
+
         if (clock.getElapsedTime() > 0.2) {
             clock.start();
             this.vision();
             this.AI();
 
             if (!this.birdUnderControlNow) {
-                if (this.stabilizeUpdate) {
+                if (this.stabilizeUpdate) { // It is a lock for stabilizePause - without this "if" it will be always false - and stabilize() will never stop
                     this.stabilizePause = false;
                     this.stabilizeUpdate = false;
                 }
+                //this.moveStateZero(); - I need to think about it... I don`t need update it always
             }
 
             this.birdUnderControlNow = false;
@@ -472,8 +491,12 @@ var birdAI = {
      * 
      */
     collisionsDetector: function (object, objectsList) {
+
         var originPoint = new THREE.Vector3();
-        originPoint.setFromMatrixPosition(object.matrixWorld);
+        //originPoint.setFromMatrixPosition(object.matrixWorld);
+        originPoint = this.flyingPosition;
+
+        var collisionsList = new Array();
 
         for (var vertexIndex = 0; vertexIndex < object.geometry.vertices.length; vertexIndex++)
         {
@@ -483,13 +506,22 @@ var birdAI = {
             var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
             var collisionResults = ray.intersectObjects(objectsList);
             if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length()) {
-                var t = new Array();
-                t.push(collisionResults[0].object);
-                return t;
+                //if (collisionResults.length > 0 && collisionResults[0].distance < 0.5) {
+                for (var i = 0; i < collisionResults.length; i++) {
+                    // You need unique push
+                    //collisionsList.push(collisionResults[i].object);
+                    if (!containsElemID(collisionsList, collisionResults[i].object)) {
+                        collisionsList.push(collisionResults[i].object);
+
+                    }
+                }
             }
 
         }
-        return new Array();
+        //if (collisionsList.length) {
+        //    console.log(collisionsList.length);
+        //}
+        return collisionsList;
     },
     collisionsMatrix: null,
     vision: function () {
@@ -497,17 +529,17 @@ var birdAI = {
         var LL1;
         var LL2;
         var LL3;
-        // LEVEL 0
-        LL0 = this.collisionsDetector(this.birdVisionL0Box[0], this.barriers);
-
         //collisionsMatrix;// = listToMatrix();
         var collisionsList = new Array(this.birdVisionL1Box.length).fill(0);
 
+        // LEVEL 0
+        LL0 = this.collisionsDetector(this.birdVisionL0Box[0], this.barriers);
         if (LL0.length != 0) {
             tableColor("AITable", colorRandomHexN());
-            // LEVEL 1
+            // LEVEL 1, 2, 3
             for (var i = 0; i < this.birdVisionL1Box.length; i++)
             {
+                // LEVEL 1
                 LL1 = this.collisionsDetector(this.birdVisionL1Box[i], LL0);
                 if (LL1.length != 0) {
                     collisionsList[i]++;
@@ -598,6 +630,12 @@ var birdAI = {
 
             } else {
                 this.boost = this.boostDefault;
+
+                //this.moveState.pitchDown = 0;
+                //this.moveState.pitchUp = 0;
+                //this.moveState.yawLeft = 0;
+                //this.moveState.yawRight = 0;
+
             }
             if (!Wait) {
                 if (LU + RU > LD + RD) {

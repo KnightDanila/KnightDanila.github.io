@@ -41,7 +41,7 @@ and open the template in the editor.
         <!--        <video id="video" autoplay loop style="display:none;">
                         <source src="city-4096-mp4-30fps-x264-ffmpeg.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
                 </video>-->
-
+        <!--</script><script>-->
         <script>
             var a = 0;
             var as = 0.05;
@@ -58,9 +58,7 @@ and open the template in the editor.
                     CTRL = 17,
                     SHIFT = 16,
                     ENTER = 13;
-            var dirs = {
-                //[LEFT] : 0, [UP]: 0, [RIGHT]: 0, [DOWN]: 0, [SHIFT] : 0
-            };
+            var dirs = {};
             var SPEED = 10;
             $(document).keydown(function (e) {
                 dirs[e.keyCode] = 1;
@@ -135,6 +133,7 @@ and open the template in the editor.
                 x = a * Math.sin(x0) * 100;
                 //y = (-1) * Math.abs(Math.sin(Math.PI/2 * x/100)) * 100;
                 y = (-1) * Math.pow(Math.sin(Math.PI / 2 * x / 100), 2) * 100;
+                //console.log("a=" + a);
                 //console.log("x0=" + x0);
                 //console.log("walkRun=" + walkRun);
                 //console.log("x0 * walkRun=" + x0 * walkRun);
@@ -148,7 +147,8 @@ and open the template in the editor.
                  y += dirs[DOWN] * SPEED;
                  */
                 if (seeRedPoint) {
-                    $("#iPoint").css('transform', `translate(${x}px, ${y}px)`);
+                    //$("#iPoint").css('transform', `translate(${x}px, ${y}px)`);
+                    $("#iPoint").css('transform', "translate(" + x + "px, " + y + "px)");
                 }
             }
             /*
@@ -165,7 +165,8 @@ and open the template in the editor.
              videoTexture.minFilter = THREE.LinearFilter;
              videoTexture.magFilter = THREE.LinearFilter;
              */
-            var camera, scene, renderer;
+            var camera, cameraPositionBox,
+                    scene, renderer;
             var imgArray = ["409452_1920_1.jpg", "obduction-nvidia-ansel-360-photosphere.jpg"];
             var imgArrayN = 0;
             var fov = 70,
@@ -189,7 +190,8 @@ and open the template in the editor.
                 var container, mesh;
                 container = document.getElementById('container');
                 camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 1, 1100);
-                camera.target = new THREE.Vector3(x, y, 0);
+                camera.target = new THREE.Vector3(0, 0, 0);
+                camera.position.set(0, 0, 0);
                 scene = new THREE.Scene();
                 //mesh = new THREE.Mesh(new THREE.SphereGeometry(500, 60, 40), new THREE.MeshBasicMaterial({map: videoTexture}));
                 mesh = new THREE.Mesh(new THREE.SphereGeometry(500, 60, 40), new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('409452_1920_1.jpg')}));
@@ -209,6 +211,16 @@ and open the template in the editor.
                 //
 
                 window.addEventListener('resize', onWindowResize, false);
+
+                var geometry = new THREE.BoxGeometry(10, 10, 10);
+                var material = new THREE.MeshBasicMaterial({color: 0xFFFF00, wireframe: true});
+                cameraPositionBox = new THREE.Mesh(geometry, material);
+                var vector = new THREE.Vector3(0, 0, -1); // https://stackoverflow.com/questions/15696963/three-js-set-and-read-camera-look-vector/15697227#15697227
+                vector.applyQuaternion(camera.quaternion);
+                cameraPositionBox.lookAt(vector);
+                cameraPositionBox.position.copy(camera.position);
+                cameraPositionBox.visible = false;
+                scene.add(cameraPositionBox);
             }
 
             function onWindowResize() {
@@ -287,10 +299,31 @@ and open the template in the editor.
                  console.log("theta " + theta);
                  */
                 camera.lookAt(camera.target);
+                cameraPositionBox.lookAt(camera.target);
 
-                camera.position.x = -x / 5 * Math.sin(theta);
-                camera.position.y = -y / 5;
-                camera.position.z = x / 5 * Math.cos(theta);
+                /*
+                 camera.position.x = -x / 5 * Math.sin(theta);
+                 camera.position.y = -y / 5;
+                 camera.position.z = x / 5 * Math.cos(theta);
+                 */
+
+                camera.position.x = cameraPositionBox.position.x - x / 5 * Math.sin(theta);
+                camera.position.y = cameraPositionBox.position.y + (-y / 5);
+                camera.position.z = cameraPositionBox.position.z + x / 5 * Math.cos(theta);
+
+                cameraPositionBox.translateZ(a * walkRun);
+
+                /*
+                 console.log("camera.position.x = " + camera.position.x);
+                 console.log("camera.position.y = " + camera.position.y);
+                 console.log("camera.position.z = " + camera.position.z);
+                 console.log("cameraPositionBox.position.x = " + cameraPositionBox.position.x);
+                 console.log("cameraPositionBox.position.y = " + cameraPositionBox.position.y);
+                 console.log("cameraPositionBox.position.z = " + cameraPositionBox.position.z);
+                 */
+
+                //camera.translateZ(-a);
+                //camera.translateX(-a);
                 /*
                  console.log("sin " + Math.sin(theta));
                  console.log("cos " + Math.cos(theta));
