@@ -131,7 +131,7 @@ and open the template in the editor.
                 camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 1, 1100);
                 camera.target = new THREE.Vector3(0, 0, 0);
                 scene = new THREE.Scene();
-                mesh = new THREE.Mesh(new THREE.SphereGeometry(500, 60, 40), new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture(imgArray[imgArrayN])}));
+                mesh = new THREE.Mesh(new THREE.SphereGeometry(600, 60, 40), new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture(imgArray[imgArrayN])}));
                 mesh.scale.x = -1;
                 mesh.rotateY(Math.PI);
                 scene.add(mesh);

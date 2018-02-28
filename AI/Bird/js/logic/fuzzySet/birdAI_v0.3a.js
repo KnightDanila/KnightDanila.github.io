@@ -30,6 +30,86 @@
  /
  Z
  */
+/*
+ var Bird = function () {
+ var scope = this;
+ THREE.Geometry.call(this);
+ 
+ v(  5,   0,   0);
+ v(- 5, - 2,   1);
+ v(- 5,   0,   0);
+ v(- 5, - 2, - 1);
+ 
+ v(  0,   2, - 6);
+ v(  0,   2,   6);
+ v(  2,   0,   0);
+ v(- 3,   0,   0);
+ 
+ f3(0, 2, 1);
+ // f3(0, 3, 2);
+ f3(4, 7, 6);
+ f3(5, 6, 7);
+ 
+ //this.computeCentroids();
+ this.computeFaceNormals();
+ 
+ function v(x, y, z) {
+ scope.vertices.push(new THREE.Vertex(new THREE.Vector3(x, y, z)));
+ }
+ 
+ function f3(a, b, c) {
+ scope.faces.push(new THREE.Face3(a, b, c));
+ }
+ }
+ Bird.prototype = new THREE.Geometry();
+ Bird.prototype.constructor = Bird;
+ */
+var Bird = function () {
+
+    var scope = this;
+
+    THREE.Geometry.call(this);
+
+    v(5, 0, 0);
+    v(-5, -2, 1);
+    v(-5, 0, 0);
+    v(-5, -2, -1);
+
+    v(0, 2, -6);
+    v(0, 2, 6);
+    v(2, 0, 0);
+    v(-3, 0, 0);
+
+    f3(0, 2, 1);
+    // f3( 0, 3, 2 );
+
+    f3(4, 7, 6);
+    f3(5, 6, 7);
+
+    this.computeFaceNormals();
+
+    function v(x, y, z) {
+
+        scope.vertices.push(new THREE.Vector3(x, y, z));
+
+    }
+
+    function f3(a, b, c) {
+
+        scope.faces.push(new THREE.Face3(a, b, c));
+
+    }
+
+};
+
+Bird.prototype = Object.create(THREE.Geometry.prototype);
+Bird.prototype.constructor = Bird;
+
+
+//####################################
+
+
+
 Math.radians = function (degrees) {
     return degrees * Math.PI / 180;
 };
@@ -106,6 +186,7 @@ var birdAI = {
     birdVisionL2Box: [], // Level 1
     birdVisionL3Box: [], // Level 1
 
+    bird: null,
     //Only graphic
     init: function (scene) {
         //
@@ -187,6 +268,29 @@ var birdAI = {
             this.barriersAdd(this.flyingUpBox);
             this.barriersAdd(this.flyingDownBox);
         }
+
+        //
+        this.bird = new THREE.Mesh(new Bird(), new THREE.MeshBasicMaterial({color: Math.random() * 0xffffff}));
+        this.bird.phase = Math.floor(Math.random() * 62.83);
+        this.bird.position = this.flyingPosition;
+        this.bird.doubleSided = true;
+        this.bird.material.side = THREE.DoubleSide;
+        this.bird.scale.x = this.bird.scale.y = this.bird.scale.z = 2;//this.birdSize[0];
+        //this.bird.verticesNeedUpdate = true;
+        scene.add(this.bird);
+
+
+    },
+    visionHide: false,
+    hideVision: function () {
+        this.birdMeshGroup.visible = false;
+
+    },
+    showVision: function () {
+//        for (i = 0; i < this.birdVisionL0Box.length; i++) {
+//            this.birdVisionL0Box[i].visible = true;
+//        }
+        this.birdMeshGroup.visible = true;
     },
     // Vision Boxes
     initVision: function (birdMeshGroup) {
@@ -298,6 +402,27 @@ var birdAI = {
     // Animation
     animation: function () {
 
+        var fd = new THREE.Vector3();
+        fd.copy(this.flyingDirection);
+
+        this.bird.position.copy(this.flyingPosition);
+        this.bird.rotation.y = Math.atan2(-(this.flyingDirection.z - this.flyingPosition.z), this.flyingDirection.x - this.flyingPosition.x) || 0;
+        this.bird.rotation.x = Math.asin((this.flyingDirection.y - this.flyingPosition.y) / fd.sub(this.flyingPosition).length()) || 0;
+        //this.bird.rotation.x = Math.atan2(-(this.flyingDirection.x - this.flyingPosition.x), this.flyingDirection.y - this.flyingPosition.y) || 0;
+        //Math.asin(this.flyingDirection.z - this.flyingPosition.z / fd.sub(this.flyingPosition).length()) || 0;
+        /*
+         this.bird.rotation.y = Math.atan2(-fd.z, fd.x) || 0;
+         this.bird.rotation.z = Math.asin(fd.y / fd.length()) || 0;
+         */
+        //this.bird.up.copy( fd );
+        //this.bird.lookAt(this.flyingDirection);
+        //this.bird.attributes.rotation.needsUpdate = true;
+        //log.add("this.bird.rotation.y " + this.bird.rotation.y);
+        //log.add("this.bird.rotation.z " + this.bird.rotation.z);
+        this.bird.phase = (this.bird.phase + (Math.max(0, this.bird.rotation.z) + 0.1)) % 62.83;
+        //log.add("this.bird.phase " + this.bird.phase);
+        this.bird.geometry.vertices[5].y = this.bird.geometry.vertices[4].y = Math.sin(this.bird.phase) * 5;
+        this.bird.geometry.verticesNeedUpdate = true;
     },
     stabilize: function () {
         if (this.stabilizeAutoON && !this.stabilizePause) {
@@ -343,6 +468,8 @@ var birdAI = {
         //this.keelPosition.setFromMatrixPosition(this.keelBox.matrixWorld);
         this.flyingDownBox.position.set(this.flyingPosition.x, this.minHeight - 3 / 2, this.flyingPosition.z);
         this.flyingUpBox.position.set(this.flyingPosition.x, this.maxHeight - 3 / 2, this.flyingPosition.z);
+
+
     },
     flyUp: function () {
         /*

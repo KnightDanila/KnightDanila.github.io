@@ -104,7 +104,7 @@ $(document).keydown(function (e) {
     
     if (keys[keysCode.ENTER]) {
         console.log("ENTER PRESSED");
-        iframeWP.iframeWPSmallFull();
+        //iframeWP.iframeWPSmallFull();
     }
     if (keys[keysCode.KEY_P]) {
         console.log("KEY_P PRESSED");

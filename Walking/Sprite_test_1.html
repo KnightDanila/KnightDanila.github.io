@@ -26,6 +26,48 @@ and open the template in the editor.
         <div>TODO write content</div>
         <div class="box"></div>
 
+        <div id="container"></div>
+
+        <script>
+            var array = [
+                ["░░░░░░░▄▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄░░░░░░"],
+                ["░░░░░░█░░▄▀▀▀▀▀▀▀▀▀▀▀▀▀▄░░█░░░░░"],
+                ["░░░░░░█░█░▀░░░░░▀░░▀░░░░█░█░░░░░"],
+                ["░░░░░░█░█░░░░░░░░▄▀▀▄░▀░█░█▄▀▀▄░"],
+                ["█▀▀█▄░█░█░░▀░░░░░█░░░▀▄▄█▄▀░░░█░"],
+                ["▀▄▄░▀██░█▄░▀░░░▄▄▀░░░░░░░░░░░░▀▄"],
+                ["░░▀█▄▄█░█░░░░▄░░█░░░▄█░░░▄░▄█░░█"],
+                ["░░░░░▀█░▀▄▀░░░░░█░██░▄░░▄░░▄░███"],
+                ["░░░░░▄█▄░░▀▀▀▀▀▀▀▀▄░░▀▀▀▀▀▀▀░▄▀░"],
+                ["░░░░█░░▄█▀█▀▀█▀▀▀▀▀▀█▀▀█▀█▀▀█░░░"],
+                ["░░░░▀▀▀▀░░▀▀▀░░░░░░░░▀▀▀░░▀▀░░░░"]
+            ];
+
+
+
+            //array[0].map((col, i) => array.map(row => row[i]));
+
+            function rotate(matrix) {
+                alert(matrix.length);
+                alert(matrix[0][0].length);
+                var rotated = new Array();
+                
+                for (i = 0; i < matrix.length; i++) {
+                    //alert(i);
+                    rotated[i] = new Array();
+                    for (j = 0; j < matrix[i][0].length; j++) {
+                        alert(j);
+                        rotated[i][j] = matrix[i][0].charAt(j);
+                        z = matrix[i][0].length-j-1;
+                        rotated[i][j] = matrix[z][0].charAt(i);
+                    }
+                }
+                return rotated;
+            }
+            array = rotate(array);
+
+            document.getElementById('container').innerHTML = JSON.stringify(array);
+        </script>
         <script>
             /*
              sprite.anchor.set(0.5, 0.0);

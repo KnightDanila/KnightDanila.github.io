@@ -158,6 +158,24 @@ $(document).keydown(function (e) {
             birdAI.stabilizeAutoON = true;
         }
     }
+    if (keys[keysCode.KEY_V]) {
+        if (!birdAI.visionHide) {
+            birdAI.visionHide = true;
+            birdAI.hideVision();
+        } else {
+            birdAI.visionHide = false;
+            birdAI.showVision();
+        }
+    }
+
+    if (keys[keysCode.SHIFT]) {
+        birdAI.speedMax += 0.1;
+        log.add("birdAI.maxSpeed " + birdAI.speedMax);
+    }
+    if (keys[keysCode.CTRL]) {
+        birdAI.speedMax -= 0.1;
+        log.add("birdAI.maxSpeed " + birdAI.speedMax);
+    }
 
 
 
