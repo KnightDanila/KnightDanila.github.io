@@ -1,6 +1,7 @@
 .zoom img {
     background-size: contain;
-    width: 100%;
+    //position: static;
+    //width: 100%;
     //height: 100%;
     //-webkit-transition: all 2s ease;
     //-moz-transition: all 2s ease;
@@ -10,9 +11,10 @@
 }
 
 .zoom img:hover {
+    //position: absolute;
     background-size: contain;
-    margin-left:-50%; 
-    width: 200%;
+    //margin-left:-50%; 
+    width: 70%;
     //height: 100%;
     //-webkit-box-shadow: 0 0 40px rgba(255,255,255,.6), inset 0 0 40px rgba(255,255,255,1);
     //-moz-box-shadow: 0 0 40px rgba(255,255,255,.6), inset 0 0 40px rgba(255,255,255,1);
