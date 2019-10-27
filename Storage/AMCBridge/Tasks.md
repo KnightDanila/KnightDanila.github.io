@@ -12,9 +12,9 @@ A-Long - Long&Full Answer
 A: This task can be solved in two ways, 
 Mathematical and Analytical may be more, but I will write only these two.  
 Analytical -  
-	a. ln post: ln x -> &infin; if x->&infin;  
+	a. ln pos: ln x -> &infin; if x->&infin;  
 	b. ln zero: ln x -> -&infin; if x->0  
-	c. ln negt: ln x -> complex number if x < 0  
+	c. ln neg: ln x -> complex number if x < 0  
 	d. So it means - ln ln sin(x) -> max, if (ln sin(x)) -> max, if sin(x)-> max; if x=Pi/2  
 	e. ln sin(Pi/2) -> ln 1 -> 0  
 	f. ln ln sin(x) -> ln ln sin(Pi/2) -> ln ln 1 ->  ln 0 -> -&infin;  
