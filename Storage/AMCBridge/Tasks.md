@@ -13,8 +13,8 @@ A: This task can be solved in two ways,
 Mathematical and Analytical may be more, but I will write only these two.  
 Analytical -  
 	a. ln post: ln x -> &infin; if x->&infin;  
-	b. ln zero: ln x -> -&infin; if x->0
-	c. ln negt: ln x -> complex number if x < 0
+	b. ln zero: ln x -> -&infin; if x->0  
+	c. ln negt: ln x -> complex number if x < 0  
 	d. So it means - ln ln sin(x) -> max, if (ln sin(x)) -> max, if sin(x)-> max; if x=Pi/2  
 	e. ln sin(Pi/2) -> ln 1 -> 0  
 	f. ln ln sin(x) -> ln ln sin(Pi/2) -> ln ln 1 ->  ln 0 -> -&infin;  
@@ -26,8 +26,8 @@ Analytical -
 	Mathematical -  
 	1. We have to find f'(x)  
 	2. Then find x01, x02... for f'(x)=0  
-	3. Then find signs +--+ - of f'(x01), f'(x02), ...  
-	4. The answer is the same :D
+	3. Then find signs +--+ - of f'(x01), f'(x02), ...   
+	4. The answer is the same :D  
 	
 	f(x) - it has no max :)))
 <a name="2"></a>
@@ -54,15 +54,15 @@ is zero - (a,b,c)=a &middot; (b x c)=0. Also if at least one of the three vector
 is zero, then the three vectors are also considered coplanar.
 <a name="4"></a>
 4. Q: How do you detect a loop in a singly linked list?  
-	A: This problem can be solved in different ways :) And everyone has their own charm :)
+	A: This problem can be solved in different ways :) And everyone has their own charm :)  
 	a. Cell address or Hash Table - Save the address to the list and check  
 	If NULL is reached then return false   
-	If next of current node points to any of the previously stored nodes in List then return true.
+	If next of current node points to any of the previously stored nodes in List then return true.  
 	b. Mark the Nodes -  add visited flag in node structure.  
 	Mark until NULL - return false  
 	Mark until Marked node - return true  
-	c. Tortoise and Hare - Floyd’s Algorithm - first eats pasta, second runs fast :)))
-	d. There are many more algorithms, mine and not mine, whose name I do not know :D
+	c. Tortoise and Hare - Floyd’s Algorithm - first eats pasta, second runs fast :)))  
+	d. There are many more algorithms, mine and not mine, whose name I do not know :D  
 <a name="5"></a>
 5. Q: What is the geometrical sense of the curve’s curvature? 
 What information is needed to compute the curvature of a curve?  
