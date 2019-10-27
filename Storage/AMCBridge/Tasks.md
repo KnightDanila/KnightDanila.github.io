@@ -6,7 +6,7 @@ A - Answer
 A-Short - Short Answer  
 A-Long - Long&Full Answer  
 
-#### [1](#1),[2](#2),[3](#3),[4](#4),[5](#5),[6](#6),[7](#7),[8](#8),[9](#9)
+#### [1](#1),[2](#2),[3](#3),[4](#4),[5](#5),[6](#6),[7](#7),[8](#8),[9](#9),[10](#10)
 <a name="1"></a>
 1. Q: Find the maximum value of the function f(x) = ln ln sin(x).  
 A: This task can be solved in two ways, 
@@ -148,7 +148,7 @@ prime numbers?
 A: Funny… So you want to win a million dollars from …
 if I wrote you a proving of Goldbach Conjecture :D
 Now, I want to see who write this tasks :D
-<a name="9"></a>
+<a name="10"></a>
 10. Q: Does the following code have any issues?  
 `
 				
@@ -165,3 +165,6 @@ Now, I want to see who write this tasks :D
 				}`  
 	A: In an ideal world, everything should work fine, but in the real world there can be 
 	problems here a != 0 and b!= 0, with super small double... It is better to use some epsilon - std::numeric_limits<double>::epsilon()
+	
+That's all folks!  
+![Alt Text](https://thumbs.gfycat.com/SecretImprobableIberianmole-size_restricted.gif)
