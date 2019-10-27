@@ -18,7 +18,7 @@ Analytical -
 	d. So it means - ln ln sin(x) -> max, if (ln sin(x)) -> max, if sin(x)-> max; if x=Pi/2  
 	e. ln sin(Pi/2) -> ln 1 -> 0  
 	f. ln ln sin(x) -> ln ln sin(Pi/2) -> ln ln 1 ->  ln 0 -> -&infin;  
-	g. If we take x in 0<x<Pi/2 - ln ln sin(x) -> ln ln sin(0<x<Pi/2) -> ln ln ```[0..1)``` ->  ln (-&infin..0) -> -&infin;  
+	g. If we take x in 0<x<Pi/2 - ln ln sin(x) -> ln ln sin(0<x<Pi/2) -> ln ln ```[0..1)``` ->  ln (-&infin..0) -> complex numbers  
 	
 	So, f(x) - it has no max :)))  
 	But, we can try to find the answer in complex spaces, I am joking :D Don't do that :D  
