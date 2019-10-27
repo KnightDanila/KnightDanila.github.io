@@ -145,7 +145,7 @@ base class will be destroyed.
 <a name="9"></a>
 9. Q: Can you find an even number greater than 4, that is not a sum of two
 prime numbers?  
-A: Funny… So you want to win a million dollars from …
+A: Funny… So you want to win a million dollars…
 if I wrote you a proving of Goldbach Conjecture :D
 Now, I want to see who write this tasks :D
 <a name="10"></a>
