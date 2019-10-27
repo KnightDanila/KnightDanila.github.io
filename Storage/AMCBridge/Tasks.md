@@ -12,7 +12,24 @@ A-Long - Long&Full Answer
 A: This task can be solved in two ways, 
 Mathematical and Analytical may be more, but I will write only these two.  
 Analytical -  
-Mathematical -  
+	a. ln post: ln x -> &infin; if x->&infin;  
+	b. ln zero: ln x -> -&infin; if x->0
+	c. ln negt: ln x -> complex number if x < 0
+	d. So it means - ln ln sin(x) -> max, if (ln sin(x)) -> max, if sin(x)-> max; if x=Pi/2  
+	e. ln sin(Pi/2) -> ln 1 -> 0  
+	f. ln ln sin(x) -> ln ln sin(Pi/2) -> ln ln 1 ->  ln 0 -> -&infin;  
+	g. If we take x in 0<x<Pi/2 - ln ln sin(x) -> ln ln sin(0<x<Pi/2) -> ln ln ```[0..1)``` ->  ln (-&infin..0) -> -&infin;  
+	
+	So, f(x) - it has no max :)))  
+	But, we can try to find the answer in complex spaces, I am joking :D Don't do that :D  
+	
+	Mathematical -  
+	1. We have to find f'(x)  
+	2. Then find x01, x02... for f'(x)=0  
+	3. Then find signs +--+ - of f'(x01), f'(x02), ...  
+	4. The answer is the same :D
+	
+	f(x) - it has no max :)))
 <a name="2"></a>
 2. Q: What is algorithm complexity?  
 A-Short: O(f(n)) or Θ(f(n)  
@@ -73,8 +90,9 @@ It all depends on the compiler. But you can always write your own :D
 7. Q: What will happen if an exception is thrown within a constructor?  
 A: If a constructor throws an exception, the memory associated with the object itself is cleaned up — there is no memory leak.
 <a name="8"></a>
-8. How do you create a virtual constructor and virtual destructor for a class? Why would you do this?
-We cannot create a virtual constructor - Bjarne Stroustrup :)
+8. Q: How do you create a virtual constructor and virtual destructor for a class? 
+Why would you do this?  
+A: We cannot create a virtual constructor - Bjarne Stroustrup :)
 virtual destructor - we can do that...
 `
 
@@ -130,4 +148,20 @@ prime numbers?
 A: Funny… So you want to win a million dollars from …
 if I wrote you a proving of Goldbach Conjecture :D
 Now, I want to see who write this tasks :D
-
+<a name="9"></a>
+10. Q: Does the following code have any issues?  
+`
+				
+				// Returns the number of solutions of the equation ax + b =
+				0; -1, if there is infinite number of solutions.
+				int solve(double a, double b) {
+					if (a != 0) {
+						return 1;
+					}
+					if (b != 0) {
+						return 0;
+					}
+					return -1;
+				}`  
+	A: In an ideal world, everything should work fine, but in the real world there can be 
+	problems here a != 0 and b!= 0, with super small double... It is better to use some epsilon - std::numeric_limits<double>::epsilon()
