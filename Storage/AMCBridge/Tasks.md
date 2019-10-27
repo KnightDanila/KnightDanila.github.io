@@ -75,49 +75,51 @@ A: If a constructor throws an exception, the memory associated with the object i
 <a name="8"></a>
 8. How do you create a virtual constructor and virtual destructor for a class? Why would you do this?
 We cannot create a virtual constructor - Bjarne Stroustrup :)
-virtual destructor - we can do that...```
-						class Turtle{
-						public:
-							Turtle(){
-								cout << "simple Turtle\n";
-							}
-							virtual ~Turtle(){
-								cout << "~Turtle\n";
-							}
-						};
-						
-						class TeenageMutantNinjaTurtle: public Turtle{
-							Pizza  somePizza;
-						public:
-							TeenageMutantNinjaTurtle(){
-								cout << "Teenage Mutant Ninja Turtle\n";
-							}
-							~TeenageMutantNinjaTurtle(){
-								cout << "~TeenageMutantNinjaTurtle\n";
-							}
-						};
-						
-						int main ()
-						{
-							Turtle * Michelangelo = new TeenageMutantNinjaTurtle();
-							delete Michelangelo ;
-							return 0;
-						}
-						/*
-						if virtual ~Turtle() - it will del pizza
-						Turtle::ctor()
-						Pizza::ctor()
-						TeenageMutantNinjaTurtle::ctor()
-						TeenageMutantNinjaTurtle::dtor()
-						Pizza::dtor()
-						Turtle::dtor()
-						
-						if not virtual ~Turtle() - pizza will stay
-						Turtle::ctor()
-						Pizza::ctor()
-						TeenageMutantNinjaTurtle::ctor()
-						Turtle::dtor()
-						*/```
+virtual destructor - we can do that...
+`
+
+		class Turtle{
+		public:
+			Turtle(){
+				cout << "simple Turtle\n";
+			}
+			virtual ~Turtle(){
+				cout << "~Turtle\n";
+			}
+		};
+		
+		class TeenageMutantNinjaTurtle: public Turtle{
+			Pizza  somePizza;
+		public:
+			TeenageMutantNinjaTurtle(){
+				cout << "Teenage Mutant Ninja Turtle\n";
+			}
+			~TeenageMutantNinjaTurtle(){
+				cout << "~TeenageMutantNinjaTurtle\n";
+			}
+		};
+
+		int main ()
+		{
+			Turtle * Michelangelo = new TeenageMutantNinjaTurtle();
+			delete Michelangelo ;
+			return 0;
+		}
+		/*
+		if virtual ~Turtle() - it will del pizza
+		Turtle::ctor()
+		Pizza::ctor()
+		TeenageMutantNinjaTurtle::ctor()
+		TeenageMutantNinjaTurtle::dtor()
+		Pizza::dtor()
+		Turtle::dtor()
+
+		if not virtual ~Turtle() - pizza will stay
+		Turtle::ctor()
+		Pizza::ctor()
+		TeenageMutantNinjaTurtle::ctor()
+		Turtle::dtor()
+		*/`
 	Destroying an object of a derived class through a pointer to a base class with a 
 non-virtual destructor gives an undefined result. In practice, this is 
 expressed in the fact that only part of the object corresponding to the 
