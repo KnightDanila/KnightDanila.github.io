@@ -35,3 +35,11 @@ html{
 }
 
 
+table th {
+   text-align: center; 
+}
+
+.table {
+   margin: auto;
+   width: 50% !important; 
+}
