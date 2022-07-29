@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Piano-Enigma</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="styles.css">
+        <!--<script src="script.js" defer></script>-->
+    </head>
+    <body>
+
+        <video autoplay muted loop id="bgvid" poster="bg.jpg">
+            <source src="bg.mp4" type="video/mp4">
+        </video>
+
+        <div class="piano">
+            <div data-note="C" class="key white"></div>
+            <div data-note="Db" class="key black"></div>
+            <div data-note="D" class="key white"></div>
+            <div data-note="Eb" class="key black"></div>
+            <div data-note="E" class="key white"></div>
+            <div data-note="F" class="key white"></div>
+            <div data-note="Gb" class="key black"></div>
+            <div data-note="G" class="key white"></div>
+            <div data-note="Ab" class="key black"></div>
+            <div data-note="A" class="key white"></div>
+            <div data-note="Bb" class="key black"></div>
+            <div data-note="B" class="key white"></div>       
+        </div>
+
+
+        <audio id="C" src="notes/C3.mp3"></audio>
+        <audio id="Db" src="notes/D3b.mp3"></audio>
+        <audio id="D" src="notes/D3.mp3"></audio>
+        <audio id="Eb" src="notes/E3b.mp3"></audio>
+        <audio id="E" src="notes/E3.mp3"></audio>
+        <audio id="F" src="notes/F3.mp3"></audio>
+        <audio id="Gb" src="notes/G3b.mp3"></audio>
+        <audio id="G" src="notes/G3.mp3"></audio>
+        <audio id="Ab" src="notes/A3b.mp3"></audio>
+        <audio id="A" src="notes/A3.mp3"></audio>
+        <audio id="Bb" src="notes/B3b.mp3"></audio>
+        <audio id="B" src="notes/B3.mp3"></audio>
+
+        <div id="MistyPanel">
+            <div id="MistyMessage">
+                Try to solve...
+            </div>
+            <a id="MistyMessageLink" href="#link">link</a> 
+        </div>
+
+        <script>
+            var iSequence = 0;
+            const LP = ["Eb", "Bb", "Bb", "Gb", "F", "F", "F", "F", "Gb", "Eb"]
+
+            const WHITE_KEYS = ['z', 'x', 'c', 'v', 'b', 'n', 'm'];
+            const BLACK_KEYS = ['s', 'd', 'g', 'h', 'j'];
+
+            const keys = document.querySelectorAll('.key');
+            const whiteKeys = document.querySelectorAll('.key.white');
+            const blackKeys = document.querySelectorAll('.key.black');
+
+            const pass = [];
+
+            keys.forEach(key => {
+                key.addEventListener('click', () => playNote(key));
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.repeat) {
+                    return;
+                }
+
+                const key = e.key;
+                const whiteKeyIndex = WHITE_KEYS.indexOf(key);
+                const blackKeyIndex = BLACK_KEYS.indexOf(key);
+
+                if (whiteKeyIndex > -1) {
+                    playNote(whiteKeys[whiteKeyIndex]);
+                    sequenceChecker(whiteKeys[whiteKeyIndex]);
+                }
+                if (blackKeyIndex > -1) {
+                    playNote(blackKeys[blackKeyIndex]);
+                    sequenceChecker(blackKeys[blackKeyIndex]);
+                }
+            });
+
+            function sequenceChecker(key) {
+
+                if (LP[iSequence] == key.dataset.note) {
+                    iSequence++;
+                    console.log(key.dataset.note);
+                } else {
+                    iSequence = 0;
+                }
+                if (iSequence == LP.length) {
+                    console.log("Linkin Park - In the End");
+                    changeMistyMessage("Ммм... Неплохо играешь, но это не то :)",
+                            "https://www.youtube.com/watch?v=eVTXPUF4Oz4");
+
+                }
+            }
+
+
+            function fade(element) {
+                var op = 1;  // initial opacity
+                var timer = setInterval(function () {
+                    if (op <= 0.1) {
+                        clearInterval(timer);
+                        element.style.display = 'none';
+                    }
+                    element.style.opacity = op;
+                    element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+                    op -= op * 0.1;
+                }, 50);
+            }
+
+            function unfade(element) {
+                var op = 0.1;  // initial opacity
+                element.style.display = 'block';
+                var timer = setInterval(function () {
+                    if (op >= 1) {
+                        clearInterval(timer);
+                    }
+                    element.style.opacity = op;
+                    element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+                    op += op * 0.1;
+                }, 10);
+            }
+
+            function changeMistyMessage(message, link = null) {
+                var MistyMessage = document.getElementById('MistyMessage');
+                var MistyMessageLink = document.getElementById('MistyMessageLink');
+
+                MistyMessage.innerHTML = message;
+                if (link) {
+                    MistyMessageLink.setAttribute("href", link);
+                    MistyMessageLink.innerHTML = link;
+                    unfade(MistyMessageLink);
+                } else {
+                    fade(MistyMessageLink);
+            }
+            }
+
+            function playNote(key) {
+                const noteAudio = document.getElementById(key.dataset.note);
+                noteAudio.currentTime = 0;
+                noteAudio.play();
+                key.classList.add('active');
+                //noteAudio.addEventListener('ended', () => {
+                //    key.classList.remove('active');
+                //});
+
+                document.addEventListener('keyup', e => {
+                    if (e.repeat) {
+                        return;
+                    }
+                    key.classList.remove('active');
+                    //noteAudio.pause();
+                });
+            }
+
+//            document.addEventListener('keyup', e => {
+//
+//                if (e.repeat) {
+//                    return;
+//                }
+//                const key = e.key;
+//                const whiteKeyIndex = WHITE_KEYS.indexOf(key);
+//                const blackKeyIndex = BLACK_KEYS.indexOf(key);
+//
+//                if (whiteKeyIndex > -1) {
+//                    whiteKeys[whiteKeyIndex].classList.remove('active');
+//                }
+//                if (blackKeyIndex > -1) {
+//                    blackKeys[blackKeyIndex].classList.remove('active');
+//                }
+//            });
+        </script>
+
+
+    </body>
+</html>
